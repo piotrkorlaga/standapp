@@ -12,31 +12,27 @@ import {
     TextInput,
     CheckBox,
 } from 'react-native';
+import Header from './src/components/Header';
+import HeaderSection from './src/components/HeaderSection';
 
 export default class App extends Component {
     render() {
         return (
             <View style={styles.container}>
-
-              <Text style={styles.question}>
-                  What have you done today?
-              </Text>
+                <Header headerTitle={'Standapp'}/>
+                    <HeaderSection headerSectionTitle={'What have you done today?'} />
               <View style={styles.subcontainer}>
                 <CheckBox style={styles.checkbox}/>
                 <DoneItem />
               </View>
+                <HeaderSection headerSectionTitle={'What problems did you meet today?'} />
 
-              <Text style={styles.question}>
-                  What problems did you meet today?
-              </Text>
               <View style={styles.subcontainer}>
                 <CheckBox style={styles.checkbox}/>
                 <ProblemItem />
               </View>
+                <HeaderSection headerSectionTitle={'What will you do next day?'} />
 
-              <Text style={styles.question}>
-                  What will you do next day?
-              </Text>
               <View style={styles.subcontainer}>
                 <CheckBox style={styles.checkbox} />
                 <ToDoItem />
@@ -108,7 +104,7 @@ class ToDoItem extends Component {
 const styles = StyleSheet.create({
 
   container: {
-    alignItems: 'flex-start',
+    //alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
 
@@ -130,9 +126,7 @@ const styles = StyleSheet.create({
           flexGrow: 30,
       },
 
-  question: {
-    fontSize: 20,
-  },
+
 
 
 
