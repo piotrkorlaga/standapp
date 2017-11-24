@@ -14,11 +14,11 @@ const HeaderSection = (props) => {
 const styles = {
 
     viewStyle: {
-        backgroundColor: '#F8F8F8',
+        backgroundColor: '#a49ea5',
         alignItems: 'flex-start', // moving horizontally
         height: 60,
         paddingTop: 15,
-        position: 'relative'
+        position: 'relative',
     },
     questionStyle: {
         fontSize: 20,
