@@ -6,52 +6,136 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
-  View
+  View,
+    TextInput,
+    CheckBox,
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+export default class App extends Component {
+    render() {
+        return (
+            <View style={styles.container}>
 
-export default class App extends Component<{}> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to StandApp!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
-  }
+              <Text style={styles.question}>
+                  What have you done today?
+              </Text>
+              <View style={styles.subcontainer}>
+                <CheckBox style={styles.checkbox}/>
+                <DoneItem />
+              </View>
+
+              <Text style={styles.question}>
+                  What problems did you meet today?
+              </Text>
+              <View style={styles.subcontainer}>
+                <CheckBox style={styles.checkbox}/>
+                <ProblemItem />
+              </View>
+
+              <Text style={styles.question}>
+                  What will you do next day?
+              </Text>
+              <View style={styles.subcontainer}>
+                <CheckBox style={styles.checkbox} />
+                <ToDoItem />
+              </View>
+            </View>
+        );
+    }
 }
 
+class DoneItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {text: ''};
+    }
+
+    render() {
+      return (
+          <TextInput style={styles.element}
+                     placeholder={"What did you get done?"}
+                     onChangeText={(text) => this.setState({text})}
+                     multiline={true}
+          />
+      );
+    }
+}
+
+class ProblemItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {text: ''};
+    }
+    render() {
+        return (
+            <TextInput  style={styles.element}
+                        placeholder={"Problem did you meet."}
+                        onChangeText={(text) => this.setState({text})}
+                        multiline={true}
+            />
+        );
+    }
+}
+
+class ToDoItem extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {text: ''};
+      this.update = this.update.bind(this);
+    }
+    update (e) {
+        this.setState({text: e.target.value})
+    }
+    render() {
+        return (
+            <View>
+            <TextInput  style={styles.element}
+                        placeholder={"Thing to do next day."}
+                        onChange={this.update}
+                        multiline={true}
+
+            />
+            <Text>{this.state.text}</Text>
+            </View>
+        );
+    }
+}
+
+
+
 const styles = StyleSheet.create({
+
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+
+  subcontainer: {
+      flexDirection: 'row',
+      backgroundColor: 'yellow',
+      alignItems: 'stretch',
+
+  },
+
+      checkbox: {
+        backgroundColor: 'red',
+          flexGrow: 0.1,
+      },
+
+      element: {
+          fontSize: 14,
+          alignSelf: 'stretch',
+          flexGrow: 30,
+      },
+
+  question: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+
+
+
+
+
 });
