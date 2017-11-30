@@ -13,6 +13,7 @@ import Header from './src/components/Header';
 import HeaderSection from './src/components/HeaderSection';
 import Item from './src/components/Item';
 
+
 export default class App extends Component {
     render() {
         return (
@@ -20,10 +21,11 @@ export default class App extends Component {
                 <Header headerTitle={'Standapp'}/>
                     <HeaderSection headerSectionTitle={'What have you done today?'} />
                         <Item placeholder={'Thing you get done'} />
-                    <HeaderSection headerSectionTitle={'What problems did you meet today?'} />
-                        <Item placeholder={'Problem you met'} />
-                    <HeaderSection headerSectionTitle={'What will you do next day?'} />
-                        <Item placeholder={'Thing to do next day'} />
+                    {/*<HeaderSection headerSectionTitle={'What problems did you meet today?'} />*/}
+                        {/*<Item placeholder={'Problem you met'} />*/}
+                    {/*<HeaderSection headerSectionTitle={'What will you do next day?'} />*/}
+                        {/*<Item placeholder={'Thing to do next day'} />*/}
+
             </View>
         );
     }

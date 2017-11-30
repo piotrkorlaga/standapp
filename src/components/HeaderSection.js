@@ -14,7 +14,7 @@ const HeaderSection = (props) => {
 const styles = {
 
     viewStyle: {
-        backgroundColor: '#a49ea5',
+        backgroundColor: '#5c7dd6',
         alignItems: 'flex-start', // moving horizontally
         height: 60,
         paddingTop: 15,
@@ -22,6 +22,8 @@ const styles = {
     },
     questionStyle: {
         fontSize: 20,
+        color: '#F8F8F8',
+        paddingLeft: 10,
     },
 
 };
