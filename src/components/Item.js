@@ -46,7 +46,7 @@ class Item extends Component {
                 >
                     +
                 </Button>
-                
+
             </View>
         );
     }

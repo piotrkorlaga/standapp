@@ -12,6 +12,7 @@ import {
 import Header from './src/components/Header';
 import HeaderSection from './src/components/HeaderSection';
 import Item from './src/components/Item';
+import firebase from 'firebase';
 
 
 export default class App extends Component {
