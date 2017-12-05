@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
-import { View, } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Icon, Text } from 'native-base';
-// import Header2 from './src/components/Header';
-// import HeaderSection from './src/components/HeaderSection';
-// import {Item} from './src/components/Item';
 import firebase from 'firebase';
 import {LoginForm} from './src/LoginForm';
 import {SpinnerComponent} from './src/components/Spinner';
-// import {Button} from "./src/components/Button";
-
-{/*<View style={styles.container}>*/}
-{/*<Header headerTitle={'Standapp'}/>*/}
-{/*<HeaderSection headerSectionTitle={'What problems did you meet today?'} />*/}
-{/*<Item placeholder={'Problem you met'} />*/}
-{/*<HeaderSection headerSectionTitle={'What will you do next day?'} />*/}
-{/*<Item placeholder={'Thing to do next day'} />*/}
-{/*<HeaderSection headerSectionTitle={'What have you done today?'} />*/}
-{/*<Item placeholder={'Thing you get done'} />*/}
-{/*</View>*/}
+import {RouterComponent} from "./src/Router";
 
 export default class App extends Component {
 
@@ -58,14 +44,20 @@ export default class App extends Component {
             case false:
                 return <LoginForm/>;
             default:
-                return <SpinnerComponent/>;
+                return (
+                    <Container>
+                        <SpinnerComponent/>
+
+                    </Container>
+                );
         }
     }
-
+// {this.renderContent()}
     render() {
         return (
             <Container>
-                {this.renderContent()}
+                <RouterComponent/>
+
             </Container>
         );
     }

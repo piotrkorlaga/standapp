@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const HeaderSection = (props) => {
+export const HeaderSection = (props) => {
     const { questionStyle, viewStyle } = styles;
 
     return (
@@ -27,5 +27,3 @@ const styles = {
     },
 
 };
-
-export default HeaderSection;

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Input, Label, Title, Button, Text } from 'native-base';
 import firebase from 'firebase';
+import { Keyboard } from 'react-native'
 import {SpinnerComponent} from "./components/Spinner";
+import {Actions} from 'react-native-router-flux';
 
 export class LoginForm extends Component {
     state = { email: '', password: '', error: '', loading: false };
@@ -18,10 +20,14 @@ export class LoginForm extends Component {
                    .then(this.onLoginSuccess.bind(this))
                    .catch(this.onLoginFail.bind(this));
             });
+
+        Keyboard.dismiss();
     }
 
     onLoginSuccess() {
         this.setState({ email: '', password: '', loading: false, error: '' })
+
+        Actions.today();
     }
 
     onLoginFail() {
@@ -46,9 +52,6 @@ export class LoginForm extends Component {
     render() {
         return (
             <Container>
-                <Header>
-                    <Title>Authentication</Title>
-                </Header>
                 <Content>
                     <Form>
                         <Item floatingLabel>
