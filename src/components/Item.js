@@ -1,9 +1,9 @@
 import React, {Component,} from 'react';
 import { View, TextInput } from 'react-native';
-import Button from './Button';
+import {Button} from './Button';
 import {ItemList} from './ItemList';
 
-class Item extends Component {
+export class Item extends Component {
     constructor(props) {
         super(props);
         this.state = {input: ''};
@@ -18,7 +18,7 @@ class Item extends Component {
                             ref={component => { this.inputToClear = component }}
                             style={styles.textInputStyle}
                             onChangeText={text => {
-                                    this.setState({input: text})                                   }
+                                    this.setState({input: text})}
                             }
                             multiline={true}
                             placeholder={this.props.placeholder}
@@ -75,5 +75,3 @@ const styles = {
 
     }
 };
-
-export default Item;
