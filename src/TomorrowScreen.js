@@ -7,7 +7,7 @@ export const TomorrowScreen = () => {
     return(
         <View>
             <HeaderSection headerSectionTitle={'What will you do next day?'} />
-            <Item placeholder={'Thing to do next day'} />
+            <Item placeholder={'Thing to do next day'} inputType="tomorrow"/>
         </View>
     );
 };

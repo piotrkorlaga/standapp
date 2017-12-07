@@ -1,5 +1,5 @@
 import React, {Component,} from 'react';
-import { View, TextInput } from 'react-native';
+import { ListView, View, TextInput } from 'react-native';
 import {Button} from './Button';
 import {ItemList} from './ItemList';
 import firebase from 'firebase';
@@ -9,18 +9,52 @@ export class Item extends Component {
         super(props);
         this.state = {input: ''};
         this.state.inputs = [];
+        this.state.key = {key: ''};
+        this.state.keys =[]
     }
 
-    saveData() {
-        const {input, inputs} = this.state;
+    // componentWillMount() {
+    //     this.fetchData();
+    //     this.createDataSource(this.props);
+    // }
+    //
+    // componentWillReceiveProps(nextProps) {
+    //     this.createDataSource(nextProps);
+    // }
+    //
+    // createDataSource({input}) {
+    //     const ds = new ListView.DataSource({
+    //         rowHasChanged: (r1, r2) => r1 != r2
+    //     });
+    //
+    //     this.dataSource = ds.cloneWithRows(input);
+    // }
+
+    saveData(inputType) {
+        const { input } = this.state;
         const { currentUser } = firebase.auth();                    // getting access to current user in our FBDB -> firebase.auth().currentUset
-        firebase.database().ref(`users/${currentUser.uid}/inputs`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
+        this.state.key = firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
                                                                     // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
-            .push({ input, inputs });    // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
+            .push({ input }).key;    // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
+
+        this.setState({keys: [...this.state.keys, this.state.key]});
+        this.setState({key: ''});
     }
 
-    deleteData() {
+    fetchData(){
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`users/${currentUser.uid}/inputs/`) // again, we need the access to DB location
+            .on('value', snapshot => { // anytime we get any value/data comes across ref above, call function snapshot with an object (snapshot) to describe the data that's sitting in ther
+                snapshot.val() // this is how we actually get access to the data in our ref
+                 // return val?
+            });
+    }
 
+    deleteData(id) {
+        const { currentUser } = firebase.auth();
+
+        firebase.database().ref(`users/${currentUser.uid}/inputs/${id}`)
+            .remove();
     }
 
     render() {
@@ -38,10 +72,12 @@ export class Item extends Component {
                 />
 
                 {this.state.inputs.map((element,index) =>
-                    <ItemList key={index} prop={element} pressDelete={() => {
-                        const result = this.state.inputs.filter((el) => el !== element);
-                        this.setState({inputs: result});
-                        // linking to FireBase
+                    <ItemList key={index}
+                              prop={element}
+                              pressDelete={() => {
+                                    const result = this.state.inputs.filter((el) => el !== element);
+                                    this.setState({inputs: result});
+                                    this.deleteData(this.state.key);
                     }}/>)
                 }
 
@@ -52,7 +88,7 @@ export class Item extends Component {
                             this.setState({inputs: [...this.state.inputs,this.state.input]});
                             this.inputToClear.clear();
                             this.setState({input: ''});
-                            this.saveData();
+                            this.saveData(this.props.inputType);
                         } else {
                             alert('Pass some data.');
                         }

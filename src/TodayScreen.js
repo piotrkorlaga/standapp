@@ -7,7 +7,7 @@ export const TodayScreen = () => {
     return(
         <View>
             <HeaderSection headerSectionTitle={'What have you done today?'} />
-            <Item placeholder={'Thing you get done'} />
+            <Item placeholder={'Thing you get done'} inputType="today" />
         </View>
     );
 };
