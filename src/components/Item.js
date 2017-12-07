@@ -10,7 +10,7 @@ export class Item extends Component {
         this.state = {input: ''};
         this.state.inputs = [];
         this.state.key = {key: ''};
-        this.state.keys =[]
+        this.state.keys = [];
     }
 
     // componentWillMount() {
@@ -33,29 +33,31 @@ export class Item extends Component {
     saveData(inputType) {
         const { input } = this.state;
         const { currentUser } = firebase.auth();                    // getting access to current user in our FBDB -> firebase.auth().currentUset
-        this.state.key = firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
+        const inputId = firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
                                                                     // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
             .push({ input }).key;    // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
-
-        this.setState({keys: [...this.state.keys, this.state.key]});
-        this.setState({key: ''});
+        this.setState({keys: [...this.state.keys, inputId]});
     }
 
-    fetchData(){
-        const { currentUser } = firebase.auth();
-        firebase.database().ref(`users/${currentUser.uid}/inputs/`) // again, we need the access to DB location
-            .on('value', snapshot => { // anytime we get any value/data comes across ref above, call function snapshot with an object (snapshot) to describe the data that's sitting in ther
-                snapshot.val() // this is how we actually get access to the data in our ref
-                 // return val?
-            });
-    }
+    // fetchData(){
+    //     const { currentUser } = firebase.auth();
+    //     firebase.database().ref(`users/${currentUser.uid}/inputs/`) // again, we need the access to DB location
+    //         .on('value', snapshot => { // anytime we get any value/data comes across ref above, call function snapshot with an object (snapshot) to describe the data that's sitting in ther
+    //             snapshot.val() // this is how we actually get access to the data in our ref
+    //              // return val?
+    //         });
+    // }
 
-    deleteData(id) {
+    deleteData(inputType, id) {
         const { currentUser } = firebase.auth();
 
-        firebase.database().ref(`users/${currentUser.uid}/inputs/${id}`)
+        firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}/${id}`)
             .remove();
+
+        const newInputId = this.state.keys.filter(idVal => idVal !== id);
+        this.setState({keys: newInputId});
     }
+
 
     render() {
         return (
@@ -77,7 +79,7 @@ export class Item extends Component {
                               pressDelete={() => {
                                     const result = this.state.inputs.filter((el) => el !== element);
                                     this.setState({inputs: result});
-                                    this.deleteData(this.state.key);
+                                    this.deleteData(this.props.inputType, this.state.keys[0]);
                     }}/>)
                 }
 
@@ -87,8 +89,9 @@ export class Item extends Component {
                         if (this.state.input) {
                             this.setState({inputs: [...this.state.inputs,this.state.input]});
                             this.inputToClear.clear();
-                            this.setState({input: ''});
                             this.saveData(this.props.inputType);
+                            this.setState({input: ''});
+
                         } else {
                             alert('Pass some data.');
                         }
