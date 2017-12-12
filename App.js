@@ -1,57 +1,72 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import React, {Component} from 'react';
+import {Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Icon, Text} from 'native-base';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import firebase from 'firebase';
+import {LoginForm} from './src/LoginForm';
+import {SpinnerComponent} from './src/components/Spinner';
+import {RouterComponent} from "./src/Router";
+import reducers from './src/reducers';
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+export default class App extends Component {
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+    state = {loggedIn: null};
 
-export default class App extends Component<{}> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to StandApp!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
-  }
+    componentWillMount() {
+        firebase.initializeApp({
+            apiKey: "AIzaSyDm3K8dRFvmh590NJgEHZsLpdHfIMmdlGo",
+            authDomain: "standapp-e73d7.firebaseapp.com",
+            databaseURL: "https://standapp-e73d7.firebaseio.com",
+            projectId: "standapp-e73d7",
+            storageBucket: "standapp-e73d7.appspot.com",
+            messagingSenderId: "878518537515"
+        });
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({loggedIn: true});
+            } else {
+                this.setState({loggedIn: false});
+            }
+        });
+    }
+
+    renderContent() {
+        switch (this.state.loggedIn) {
+            case true:
+                return (
+                    <Content>
+                        <Button
+                            onPress={() => firebase.auth().signOut()}
+                            block
+                        >
+                            <Text>Log out</Text>
+                        </Button>
+                    </Content>
+                );
+            case false:
+                return <LoginForm/>;
+            default:
+                return (
+                    <Container>
+                        <SpinnerComponent/>
+
+                    </Container>
+                );
+        }
+    }
+
+// {this.renderContent()}
+    render() {
+        return (
+
+                <Container>
+                    <RouterComponent/>
+
+                </Container>
+
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+
