@@ -32,16 +32,13 @@ export class Item extends Component {
         const { input, inputs } = this.state;
 
         const { currentUser } = firebase.auth();                    // getting access to current user in our FBDB -> firebase.auth().currentUset
-        const inpId = firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
+        const key = firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
                                                                     // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
             .push({ input }).key;                                   // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
 
-        this.setState({inputs: [...this.state.inputs, {input: this.state.input, inpId: inpId}]});
+        this.setState({inputs: [...this.state.inputs, {input: this.state.input, key: key}]});
         this.inputToClear.clear();
         this.setState({input: ''});
-        console.log(inputs);
-
-
     }
 
     // fetchData(){
@@ -59,9 +56,8 @@ export class Item extends Component {
         firebase.database().ref(`users/${currentUser.uid}/inputs/${inputType}/${id}`)
             .remove();
 
-        const result = this.state.inputs.filter((el) => el.inpId !== id);
+        const result = this.state.inputs.filter((el) => el.key !== id);
         this.setState({inputs: result});
-        console.log(inputs);
     }
 
 
@@ -82,7 +78,7 @@ export class Item extends Component {
                 {this.state.inputs.map( (element, index) =>
                     <ItemList key={index}
                               prop={element.input}
-                              pressDelete={() => this.deleteData(this.props.inputType, element.inpId)}
+                              pressDelete={() => this.deleteData(this.props.inputType, element.key)}
                     />
                     )
                 }
