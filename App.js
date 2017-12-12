@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Icon, Text } from 'native-base';
+import React, {Component} from 'react';
+import {Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Icon, Text} from 'native-base';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
 import firebase from 'firebase';
 import {LoginForm} from './src/LoginForm';
 import {SpinnerComponent} from './src/components/Spinner';
 import {RouterComponent} from "./src/Router";
+import reducers from './src/reducers';
 
 export default class App extends Component {
 
-    state = { loggedIn: null };
+    state = {loggedIn: null};
 
     componentWillMount() {
         firebase.initializeApp({
@@ -20,16 +23,16 @@ export default class App extends Component {
         });
 
         firebase.auth().onAuthStateChanged((user) => {
-            if(user) {
-                this.setState({ loggedIn: true });
+            if (user) {
+                this.setState({loggedIn: true});
             } else {
-                this.setState({ loggedIn: false });
+                this.setState({loggedIn: false});
             }
         });
     }
 
     renderContent() {
-        switch(this.state.loggedIn) {
+        switch (this.state.loggedIn) {
             case true:
                 return (
                     <Content>
@@ -52,13 +55,16 @@ export default class App extends Component {
                 );
         }
     }
+
 // {this.renderContent()}
     render() {
         return (
-            <Container>
-                <RouterComponent/>
 
-            </Container>
+                <Container>
+                    <RouterComponent/>
+
+                </Container>
+
         );
     }
 }
