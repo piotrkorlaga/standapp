@@ -2,52 +2,63 @@ import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Input, Label, Title, Button, Text } from 'native-base';
 import firebase from 'firebase';
 import { Keyboard } from 'react-native'
+import { connect } from 'react-redux';
 import {SpinnerComponent} from "./components/Spinner";
 import {Actions} from 'react-native-router-flux';
+import { emailChanged, passwordChanged } from './actions';
 
 export class LoginForm extends Component {
-    state = { email: '', password: '', error: '', loading: false };
 
-    onButtonPress() {
-        const { email, password } = this.state;
-
-        this.setState({ error: '', loading: true });
-
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(this.onLoginSuccess.bind(this))
-            .catch( () => {
-               firebase.auth().createUserWithEmailAndPassword(email, password)
-                   .then(this.onLoginSuccess.bind(this))
-                   .catch(this.onLoginFail.bind(this));
-            });
-
-        Keyboard.dismiss();
+    onEmailChange(text) {
+        this.props.emailChanged(text);
     }
 
-    onLoginSuccess() {
-        this.setState({ email: '', password: '', loading: false, error: '' })
-
-        Actions.today();
+    onPasswordChange(text) {
+        this.props.passwordChanged(text);
     }
 
-    onLoginFail() {
-        this.setState({ error: 'Authentication failed.', loading: false });
-    }
-
-    renderButton() {
-        if (this.state.loading) {
-            return <SpinnerComponent/>
-        }
-        return (
-            <Content>
-                <Button
-                    onPress={this.onButtonPress.bind(this)}
-                    block>
-                    <Text>Log in</Text>
-                </Button>
-            </Content>
-        );
-    }
+    // state = { email: '', password: '', error: '', loading: false };
+    //
+    // onButtonPress() {
+    //     const { email, password } = this.state;
+    //
+    //     this.setState({ error: '', loading: true });
+    //
+    //     firebase.auth().signInWithEmailAndPassword(email, password)
+    //         .then(this.onLoginSuccess.bind(this))
+    //         .catch( () => {
+    //            firebase.auth().createUserWithEmailAndPassword(email, password)
+    //                .then(this.onLoginSuccess.bind(this))
+    //                .catch(this.onLoginFail.bind(this));
+    //         });
+    //
+    //     Keyboard.dismiss();
+    // }
+    //
+    // onLoginSuccess() {
+    //     this.setState({ email: '', password: '', loading: false, error: '' })
+    //
+    //     Actions.today();
+    // }
+    //
+    // onLoginFail() {
+    //     this.setState({ error: 'Authentication failed.', loading: false });
+    // }
+    //
+    // renderButton() {
+    //     if (this.state.loading) {
+    //         return <SpinnerComponent/>
+    //     }
+    //     return (
+    //         <Content>
+    //             <Button
+    //                 onPress={this.onButtonPress.bind(this)}
+    //                 block>
+    //                 <Text>Log in</Text>
+    //             </Button>
+    //         </Content>
+    //     );
+    // }
 
     render() {
         return (
@@ -57,8 +68,8 @@ export class LoginForm extends Component {
                         <Item floatingLabel>
                             <Label>user@domain.com</Label>
                             <Input
-                                value={this.state.email}
-                                onChangeText={text => this.setState({ email: text })}
+                                onChangeText={this.onEmailChange.bind(this)}
+                                value={this.props.email}
                             />
                         </Item>
 
@@ -67,17 +78,17 @@ export class LoginForm extends Component {
                             <Input
                                 autoCorrect={false}
                                 secureTextEntry={false}
-                                value={this.state.password}
-                                onChangeText={password => this.setState({ password })}
+                                onChangeText={this.onPasswordChange.bind(this)}
+                                value={this.props.password}
                             />
                         </Item>
 
-                        <Text style={styles.errorTextStyle}>
-                            {this.state.error}
-                        </Text>
+                        {/*<Text style={styles.errorTextStyle}>*/}
+                            {/*{this.state.error}*/}
+                        {/*</Text>*/}
 
                     </Form>
-                    {this.renderButton()}
+                    {/*{this.renderButton()}*/}
                 </Content>
 
             </Container>
@@ -92,3 +103,14 @@ const styles = {
         color: 'red'
     }
 };
+
+const mapStateToProps = state => {
+    const { email, password } = state.auth;
+
+    return {
+        email: email,
+        password: password
+    };
+};
+
+export default connect(mapStateToProps, { emailChanged, passwordChanged })(LoginForm);
