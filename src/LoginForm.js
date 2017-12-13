@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Title, Button, Text } from 'native-base';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {Container, Header, Content, Form, Item, Input, Label, Title, Button, Text} from 'native-base';
+import {connect} from 'react-redux';
 import {SpinnerComponent} from "./components/Spinner";
-import {Actions} from 'react-native-router-flux';
-import { emailChanged, passwordChanged, loginUser } from './actions';
+
+import {emailChanged, passwordChanged, loginUser} from './actions';
 
 export class LoginForm extends Component {
 
@@ -16,9 +16,9 @@ export class LoginForm extends Component {
     }
 
     onButtonPress() {
-        const { email, password } = this.props;
+        const {email, password} = this.props;
 
-        this.props.loginUser({ email, password });
+        this.props.loginUser({email, password});
     }
 
     renderError() {
@@ -33,14 +33,14 @@ export class LoginForm extends Component {
 
     renderButton() {
         if (this.props.loading) {
-            return <SpinnerComponent />
+            return <SpinnerComponent/>
         } else {
             return (
                 <Content>
                     <Button
                         onPress={this.onButtonPress.bind(this)}
                         block>
-                        <Text>Login</Text>
+                        <Text>Log in</Text>
                     </Button>
                 </Content>
             );
@@ -70,12 +70,23 @@ export class LoginForm extends Component {
                             />
                         </Item>
 
-                            {this.renderError()}
+                        {this.renderError()}
 
                     </Form>
-                        {this.renderButton()}
-                </Content>
 
+                    {this.renderButton()}
+
+                    <Content style={styles.signUpContentStyle}>
+
+                        <Text style={{alignSelf: 'center', paddingBottom: 10}}>Or</Text>
+
+                        <Button block >
+                            <Text>Sign up</Text>
+                        </Button>
+
+                    </Content>
+
+                </Content>
             </Container>
         );
     }
@@ -86,11 +97,15 @@ const styles = {
         fontSize: 20,
         alignSelf: 'center',
         color: 'red'
+    },
+
+    signUpContentStyle: {
+        paddingTop: 100
     }
 };
 
 const mapStateToProps = state => {
-    const { email, password, error, loading } = state.auth;
+    const {email, password, error, loading} = state.auth;
 
     return {
         email: email,

@@ -63,11 +63,9 @@ export default class App extends Component {
 
         return (
                 <Provider store={store}>
-                    {/*<Container>*/}
-                        {/*<RouterComponent/>*/}
-
-                    {/*</Container>*/}
-                    <LoginForm/>
+                    <Container>
+                        <RouterComponent/>
+                    </Container>
                 </Provider>
 
         );
