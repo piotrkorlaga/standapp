@@ -91,7 +91,7 @@ export class LoginForm extends Component {
                         <Text style={{alignSelf: 'center', paddingBottom: 10}}>Or</Text>
 
                         <Button
-                            onPress={() => Actions.dupa()}
+                            onPress={() => Actions.signup()}
                             block >
                             <Text>Sign up</Text>
                         </Button>

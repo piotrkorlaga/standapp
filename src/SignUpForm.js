@@ -38,16 +38,15 @@ export class SignUpForm extends Component {
             return (
                 <Content>
                     <Button
-                        onPress={this.onButtonPress.bind(this)
-                            //     () => {
-                            //     const { email, password } = this.props;
-                            //
-                            //     if (!(email && password)) {
-                            //         alert('Please provide all needed data.');
-                            //     } else {
-                            //         this.onButtonPress.bind(this);
-                            //     }
-                            // }
+                        onPress={() => {
+                                const { email, password } = this.props;
+
+                                if (!(email && password)) {
+                                    alert('Please provide all needed data.');
+                                } else {
+                                    this.onButtonPress.bind(this);
+                                }
+                            }
                         }
                         block>
                         <Text>Sign me up</Text>

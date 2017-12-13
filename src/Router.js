@@ -13,7 +13,7 @@ export const RouterComponent = () => {
         <Router sceneStyle={{ paddingTop: 65 }}>
 
                 <Scene key="login" component={LoginForm} title="Log in to your account"/>
-                <Scene key="dupa" component={SignUpForm} title="Sign up for free"/>
+                <Scene key="signup" component={SignUpForm} title="Sign up for free"/>
 
                 <Scene key="today" component={TodayScreen} title="Step 1/3" onBack={() => {firebase.auth().signOut(); Actions.login(); console.log('Signed out')}} onRight={() => Actions.tomorrow()} rightTitle="Next" />
                 <Scene key="tomorrow" component={TomorrowScreen} title="Step 2/3" onRight={() => Actions.problem()} rightTitle="Next"/>
