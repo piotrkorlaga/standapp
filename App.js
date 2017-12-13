@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Icon, Text} from 'native-base';
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Icon, Text } from 'native-base';
+import { Provider} from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
 import LoginForm from './src/LoginForm';
 import {SpinnerComponent} from './src/components/Spinner';
@@ -58,7 +59,7 @@ export default class App extends Component {
 
 // {this.renderContent()}
     render() {
-        const store = createStore(reducers);
+        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
         return (
                 <Provider store={store}>

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Input, Label, Title, Button, Text } from 'native-base';
-import firebase from 'firebase';
-import { Keyboard } from 'react-native'
 import { connect } from 'react-redux';
 import {SpinnerComponent} from "./components/Spinner";
 import {Actions} from 'react-native-router-flux';
-import { emailChanged, passwordChanged } from './actions';
+import { emailChanged, passwordChanged, loginUser } from './actions';
 
 export class LoginForm extends Component {
 
@@ -17,48 +15,37 @@ export class LoginForm extends Component {
         this.props.passwordChanged(text);
     }
 
-    // state = { email: '', password: '', error: '', loading: false };
-    //
-    // onButtonPress() {
-    //     const { email, password } = this.state;
-    //
-    //     this.setState({ error: '', loading: true });
-    //
-    //     firebase.auth().signInWithEmailAndPassword(email, password)
-    //         .then(this.onLoginSuccess.bind(this))
-    //         .catch( () => {
-    //            firebase.auth().createUserWithEmailAndPassword(email, password)
-    //                .then(this.onLoginSuccess.bind(this))
-    //                .catch(this.onLoginFail.bind(this));
-    //         });
-    //
-    //     Keyboard.dismiss();
-    // }
-    //
-    // onLoginSuccess() {
-    //     this.setState({ email: '', password: '', loading: false, error: '' })
-    //
-    //     Actions.today();
-    // }
-    //
-    // onLoginFail() {
-    //     this.setState({ error: 'Authentication failed.', loading: false });
-    // }
-    //
-    // renderButton() {
-    //     if (this.state.loading) {
-    //         return <SpinnerComponent/>
-    //     }
-    //     return (
-    //         <Content>
-    //             <Button
-    //                 onPress={this.onButtonPress.bind(this)}
-    //                 block>
-    //                 <Text>Log in</Text>
-    //             </Button>
-    //         </Content>
-    //     );
-    // }
+    onButtonPress() {
+        const { email, password } = this.props;
+
+        this.props.loginUser({ email, password });
+    }
+
+    renderError() {
+        if (this.props.error) {
+            return (
+                <Text style={styles.errorTextStyle}>
+                    {this.props.error}
+                </Text>
+            );
+        }
+    }
+
+    renderButton() {
+        if (this.props.loading) {
+            return <SpinnerComponent />
+        } else {
+            return (
+                <Content>
+                    <Button
+                        onPress={this.onButtonPress.bind(this)}
+                        block>
+                        <Text>Login</Text>
+                    </Button>
+                </Content>
+            );
+        }
+    }
 
     render() {
         return (
@@ -83,12 +70,10 @@ export class LoginForm extends Component {
                             />
                         </Item>
 
-                        {/*<Text style={styles.errorTextStyle}>*/}
-                            {/*{this.state.error}*/}
-                        {/*</Text>*/}
+                            {this.renderError()}
 
                     </Form>
-                    {/*{this.renderButton()}*/}
+                        {this.renderButton()}
                 </Content>
 
             </Container>
@@ -105,12 +90,16 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { email, password } = state.auth;
+    const { email, password, error, loading } = state.auth;
 
     return {
         email: email,
-        password: password
+        password: password,
+        error: error,
+        loading: loading
     };
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged })(LoginForm);
+export default connect(mapStateToProps, {
+    emailChanged, passwordChanged, loginUser
+})(LoginForm);
