@@ -3,7 +3,7 @@ import {Container, Header, Content, Form, Item, Input, Label, Title, Button, Tex
 import {connect} from 'react-redux';
 import {SpinnerComponent} from "./components/Spinner";
 
-import {emailChanged, passwordChanged, loginUser} from './actions';
+import {emailChanged, passwordChanged, signUpUser} from './actions';
 
 export class SignUpForm extends Component {
 
@@ -18,7 +18,7 @@ export class SignUpForm extends Component {
     onButtonPress() {
         const {email, password} = this.props;
 
-        this.props.loginUser({email, password});
+        this.props.signUpUser({email, password});
     }
 
     renderError() {
@@ -44,7 +44,7 @@ export class SignUpForm extends Component {
                                 if (!(email && password)) {
                                     alert('Please provide all needed data.');
                                 } else {
-                                    this.onButtonPress.bind(this);
+                                    this.onButtonPress();
                                 }
                             }
                         }
@@ -112,5 +112,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-    emailChanged, passwordChanged, loginUser
+    emailChanged, passwordChanged, signUpUser
 })(SignUpForm);

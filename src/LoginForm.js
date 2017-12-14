@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import {SpinnerComponent} from "./components/Spinner";
 
-import {emailChanged, passwordChanged, loginUser} from './actions';
+import {emailChanged, passwordChanged, loginUser, signUp} from './actions';
 
 export class LoginForm extends Component {
 
@@ -20,6 +20,11 @@ export class LoginForm extends Component {
         const {email, password} = this.props;
 
         this.props.loginUser({email, password});
+    }
+
+    onButtonSignUpPress() {
+        Actions.signup();
+        this.props.signUp();
     }
 
     renderError() {
@@ -91,7 +96,7 @@ export class LoginForm extends Component {
                         <Text style={{alignSelf: 'center', paddingBottom: 10}}>Or</Text>
 
                         <Button
-                            onPress={() => Actions.signup()}
+                            onPress={ () => this.onButtonSignUpPress() }
                             block >
                             <Text>Sign up</Text>
                         </Button>
@@ -128,5 +133,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-    emailChanged, passwordChanged, loginUser
+    emailChanged, passwordChanged, loginUser, signUp
 })(LoginForm);
