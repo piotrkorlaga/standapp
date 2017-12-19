@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {Container, Header, Content, Form, Item, Input, Label, Title, Button, Text} from 'native-base';
-import {connect} from 'react-redux';
-import {Actions} from 'react-native-router-flux';
-import {SpinnerComponent} from "./components/Spinner";
+import React, { Component } from 'react';
+import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import { SpinnerComponent } from './components/Spinner';
 
-import {emailChanged, passwordChanged, loginUser, signUp} from './actions';
+import { emailChanged, passwordChanged, loginUser, signUp } from './actions';
 
 export class LoginForm extends Component {
 
@@ -17,9 +17,9 @@ export class LoginForm extends Component {
     }
 
     onButtonPress() {
-        const {email, password} = this.props;
+        const { email, password } = this.props;
 
-        this.props.loginUser({email, password});
+        this.props.loginUser({ email, password });
     }
 
     onButtonSignUpPress() {
@@ -39,12 +39,12 @@ export class LoginForm extends Component {
 
     renderButton() {
         if (this.props.loading) {
-            return <SpinnerComponent/>
-        } else {
+            return <SpinnerComponent />;
+        } 
             return (
                 <Content>
                     <Button
-                        onPress={ () => {
+                        onPress={() => {
                             const { email, password } = this.props;
 
                             if (!(email && password)) {
@@ -54,12 +54,12 @@ export class LoginForm extends Component {
                             }
                         }
                         }
-                        block>
+                        block
+                    >
                         <Text>Log in</Text>
                     </Button>
                 </Content>
             );
-        }
     }
 
     render() {
@@ -93,11 +93,12 @@ export class LoginForm extends Component {
 
                     <Content style={styles.signUpContentStyle}>
 
-                        <Text style={{alignSelf: 'center', paddingBottom: 10}}>Or</Text>
+                        <Text style={{ alignSelf: 'center', paddingBottom: 10 }}>Or</Text>
 
                         <Button
-                            onPress={ () => this.onButtonSignUpPress() }
-                            block >
+                            onPress={() => this.onButtonSignUpPress()}
+                            block
+                        >
                             <Text>Sign up</Text>
                         </Button>
 
@@ -122,13 +123,13 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const {email, password, error, loading} = state.auth;
+    const { email, password, error, loading } = state.auth;
 
     return {
-        email: email,
-        password: password,
-        error: error,
-        loading: loading
+        email,
+        password,
+        error,
+        loading
     };
 };
 

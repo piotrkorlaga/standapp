@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 import {
     EMAIL_CHANGED,
@@ -11,39 +11,30 @@ import {
     SIGNUP_USER_FAIL,
     SIGNUP_USER_SUCCESS,
     SIGNUP_USER
-} from "./types";
+} from './types';
 
-export const emailChanged = (text) => {
-    return {
+export const emailChanged = (text) => ({
         type: EMAIL_CHANGED,
         payload: text
-    };
-};
+    });
 
-export const passwordChanged = (text) => {
-    return {
+export const passwordChanged = (text) => ({
         type: PASSWORD_CHANGED,
         payload: text
-    };
-};
+    });
 
-export const signUp = () => {
-    return {
+export const signUp = () => ({
         type: SIGNUP_USER
-    };
-};
+    });
 
 
-
-export const signUpUser = ({email, password}) => {
-    return (dispatch) => {
+export const signUpUser = ({ email, password }) => (dispatch) => {
         dispatch({ type: SIGNUP_USER_START });
         console.log('signing up');
         firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then( user => {console.log('signing up 2'); signUpUserSuccess(dispatch, user); firebase.auth().signInWithEmailAndPassword(email, password)})
-            .catch( () => signUpUserFail(dispatch))
+            .then(user => { console.log('signing up 2'); signUpUserSuccess(dispatch, user); firebase.auth().signInWithEmailAndPassword(email, password); })
+            .catch(() => signUpUserFail(dispatch));
     };
-};
 
 const signUpUserSuccess = (dispatch, user) => {
     dispatch({
@@ -57,18 +48,16 @@ const signUpUserFail = (dispatch) => {
     dispatch({ type: SIGNUP_USER_FAIL });
 };
 
-export const loginUser = ({email, password}) => {
-    return (dispatch) => {
+export const loginUser = ({ email, password }) => (dispatch) => {
         dispatch({ type: LOGIN_USER_START });
         console.log('logging in');
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then( user => {console.log('logging in 2'); loginUserSuccess(dispatch, user)})
-            .catch( (error) => {
+            .then(user => { console.log('logging in 2'); loginUserSuccess(dispatch, user); })
+            .catch((error) => {
                 console.log(error);
-                loginUserFail(dispatch)
+                loginUserFail(dispatch);
             });
     };
-};
 
 // Helpers methods to loginUser reduxThunk's Action Creator
 const loginUserFail = (dispatch) => {

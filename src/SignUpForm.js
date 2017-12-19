@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Container, Header, Content, Form, Item, Input, Label, Title, Button, Text} from 'native-base';
-import {connect} from 'react-redux';
-import {SpinnerComponent} from "./components/Spinner";
+import React, { Component } from 'react';
+import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
+import { connect } from 'react-redux';
+import { SpinnerComponent } from './components/Spinner';
 
-import {emailChanged, passwordChanged, signUpUser} from './actions';
+import { emailChanged, passwordChanged, signUpUser } from './actions';
 
 export class SignUpForm extends Component {
 
@@ -16,9 +16,9 @@ export class SignUpForm extends Component {
     }
 
     onButtonPress() {
-        const {email, password} = this.props;
+        const { email, password } = this.props;
 
-        this.props.signUpUser({email, password});
+        this.props.signUpUser({ email, password });
     }
 
     renderError() {
@@ -33,8 +33,8 @@ export class SignUpForm extends Component {
 
     renderButton() {
         if (this.props.loading) {
-            return <SpinnerComponent/>
-        } else {
+            return <SpinnerComponent />;
+        } 
             return (
                 <Content>
                     <Button
@@ -48,12 +48,12 @@ export class SignUpForm extends Component {
                                 }
                             }
                         }
-                        block>
+                        block
+                    >
                         <Text>Sign me up</Text>
                     </Button>
                 </Content>
             );
-        }
     }
 
     render() {
@@ -101,13 +101,13 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const {email, password, error, loading} = state.auth;
+    const { email, password, error, loading } = state.auth;
 
     return {
-        email: email,
-        password: password,
-        error: error,
-        loading: loading
+        email,
+        password,
+        error,
+        loading
     };
 };
 

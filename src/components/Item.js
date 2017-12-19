@@ -1,13 +1,13 @@
-import React, {Component,} from 'react';
+import React, { Component, } from 'react';
 import { View, TextInput } from 'react-native';
-import {Button} from './Button';
-import {ItemList} from './ItemList';
+import { Button } from './Button';
+import { ItemList } from './ItemList';
 import firebase from 'firebase';
 
 export class Item extends Component {
     constructor(props) {
         super(props);
-        this.state = {input: ''};
+        this.state = { input: '' };
         this.state.inputs = [];
     }
 
@@ -36,9 +36,9 @@ export class Item extends Component {
                                                                     // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
             .push({ input }).key;                                   // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
 
-        this.setState({inputs: [...this.state.inputs, {input: this.state.input, key: key}]});
+        this.setState({ inputs: [...this.state.inputs, { input: this.state.input, key }] });
         this.inputToClear.clear();
-        this.setState({input: ''});
+        this.setState({ input: '' });
     }
 
     // fetchData(){
@@ -57,7 +57,7 @@ export class Item extends Component {
             .remove();
 
         const result = this.state.inputs.filter((el) => el.key !== id);
-        this.setState({inputs: result});
+        this.setState({ inputs: result });
     }
 
 
@@ -66,17 +66,19 @@ export class Item extends Component {
             <View style={styles.containerStyle}>
 
                 <TextInput
-                            ref={component => { this.inputToClear = component }}
+                            ref={component => { this.inputToClear = component; }}
                             style={styles.textInputStyle}
                             onChangeText={text => {
-                                    this.setState({input: text})}
+                                    this.setState({ input: text }); 
+}
                             }
-                            multiline={true}
+                            multiline
                             placeholder={this.props.placeholder}
                 />
 
-                {this.state.inputs.map( (element, index) =>
-                    <ItemList key={index}
+                {this.state.inputs.map((element, index) =>
+                    <ItemList
+key={index}
                               prop={element.input}
                               pressDelete={() => this.deleteData(this.props.inputType, element.key)}
                     />

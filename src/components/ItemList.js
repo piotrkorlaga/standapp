@@ -1,7 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 
-export const ItemList = ({prop, pressDelete}) => {
+export const ItemList = ({ prop, pressDelete }) => {
     const {
         containerStyle,
         buttonStyle,
@@ -13,7 +13,8 @@ export const ItemList = ({prop, pressDelete}) => {
         <View style={containerStyle}>
             <TouchableOpacity
                 onPress={pressDelete}
-                style={buttonStyle}>
+                style={buttonStyle}
+            >
                 <Text style={buttonTextStyle}>-</Text>
             </TouchableOpacity>
 
@@ -21,7 +22,6 @@ export const ItemList = ({prop, pressDelete}) => {
         </View>
     );
 };
-
 
 
 const styles = {
