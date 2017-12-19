@@ -1,8 +1,9 @@
 import React, { Component, } from 'react';
+import firebase from 'firebase';
 import { View, TextInput } from 'react-native';
 import { Button } from './Button';
 import { ItemList } from './ItemList';
-import firebase from 'firebase';
+
 
 export class Item extends Component {
     constructor(props) {
@@ -10,23 +11,6 @@ export class Item extends Component {
         this.state = { input: '' };
         this.state.inputs = [];
     }
-
-    // componentWillMount() {
-    //     this.fetchData();
-    //     this.createDataSource(this.props);
-    // }
-    //
-    // componentWillReceiveProps(nextProps) {
-    //     this.createDataSource(nextProps);
-    // }
-    //
-    // createDataSource({input}) {
-    //     const ds = new ListView.DataSource({
-    //         rowHasChanged: (r1, r2) => r1 != r2
-    //     });
-    //
-    //     this.dataSource = ds.cloneWithRows(input);
-    // }
 
     saveData(inputType) {
         const { input, inputs } = this.state;
@@ -40,15 +24,6 @@ export class Item extends Component {
         this.inputToClear.clear();
         this.setState({ input: '' });
     }
-
-    // fetchData(){
-    //     const { currentUser } = firebase.auth();
-    //     firebase.database().ref(`users/${currentUser.uid}/inputs/`) // again, we need the access to DB location
-    //         .on('value', snapshot => { // anytime we get any value/data comes across ref above, call function snapshot with an object (snapshot) to describe the data that's sitting in ther
-    //             snapshot.val() // this is how we actually get access to the data in our ref
-    //              // return val?
-    //         });
-    // }
 
     deleteData(inputType, id) {
         const { currentUser } = firebase.auth();
