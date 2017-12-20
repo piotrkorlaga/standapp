@@ -19,7 +19,7 @@ export const RouterComponent = () => (
 
             <Scene key="main">
                 <Scene
-                    key="history"
+                    key="historycard"
                     component={History}
                     title="User's history"
                     onRight={() => Actions.today()}

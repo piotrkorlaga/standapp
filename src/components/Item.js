@@ -57,7 +57,7 @@ export class Item extends Component {
 
                 {this.state.inputs.map((element, index) =>
                     <ItemList
-key={index}
+                              key={index}
                               prop={element.input}
                               pressDelete={() => this.deleteData(this.props.inputType, element.key)}
                     />
