@@ -1,105 +1,98 @@
 import React, { Component } from 'react';
-import { ListView } from 'react-native';
 import _ from 'lodash';
 import firebase from 'firebase';
-import { Body, Title, Subtitle, Container, Header, Content, List, ListItem, Text, Card } from 'native-base';
+import {
+  Body, Title, Subtitle, Container, Header,
+  Content, List, ListItem, Text, Card,
+} from 'native-base';
 import axios from 'axios';
 
 export default class History extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            stores: []
-        };
-        this.state = { inputs: '' };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      todays: [],
+      tomorrows: [],
+      problems: [],
+    };
+  }
 
-    componentWillMount() {
-        firebase.auth().currentUser.getIdToken(true)
-            .then((idToken) => {
-                axios.get(`https://standapp-e73d7.firebaseio.com/users/${firebase.auth().currentUser.uid}.json?auth=${idToken}`)
-                    .then((response) => console.log(response))
-                // .then(response => {
-                //         const stores = response.data.data.inputs.children.map(obj => obj.data);
-                //         this.setState({ stores });
-                //         console.log(this.state.stores);
-                //     })
-                    .catch((error) => console.log('Error :: ' & error.message));
-            });
+  componentWillMount() {
+    firebase.auth().currentUser.getIdToken(true)
+      .then((idToken) => {
+        axios.get(`https://standapp-e73d7.firebaseio.com/users/${firebase.auth().currentUser.uid}.json?auth=${idToken}`)
+          .then((response) => {
+            // wyjściowy obiekt ze spłaszczoną strukturą. UID jest dopisane do val
+            const todays = _.map(response.data.inputs.today, (val, uid) => ({ ...val, uid }));
+            this.setState({ todays });
 
-    }
+            const tomorrows = _.map(response.data.inputs.tomorrow, (val, uid) => ({ ...val, uid }));
+            this.setState({ tomorrows });
 
-    fetchData() {
-        const { currentUser } = firebase.auth();
-        const recentPostsRef = firebase.database().ref(`users/${currentUser.uid}/inputs/`);
-        recentPostsRef.once('value').then(snapshot => {
-            // snapshot.val() is the dictionary with all your keys/values from the '/store' path
-            this.setState({ stores: snapshot.val() });
-        });
+            const problems = _.map(response.data.inputs.problems, (val, uid) => ({ ...val, uid }));
+            this.setState({ problems });
+          })
+          .catch(error => console.log('Error :: ' & error.message));
+      });
+  }
 
-        const inputs = _.map(this.state.stores, (val, uid) => ({ ...val, uid }));
-        return { inputs };
-    }
+  renderSection(listName) {
+    // uważać na metodę dostępu do tablicy przez [`${}`]. Przy pisaniu apki webowej
+    // nazwy zmiennych są często skracane, więc lepiej je hardcodować.
+    return this.state[`${listName}`].map(data => (
+      <ListItem>
+        <Text>
+          {data.input}
+        </Text>
+      </ListItem>
+    ));
+  }
 
-    createDataSource({ inputs }) {
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
+  render() {
+    return (
+      <Container>
 
-        this.dataSource = ds.cloneWithRows(inputs);
-    }
+        <Content>
+          <Card>
 
-    renderRow(inputs) {
-        return (
-            <Text inputs={inputs}>{this.state.inputs}</Text>
-        );
-    }
+            <List>
+              <Header>
 
-    render() {
-        return (
-            <Container>
+                <Body>
+                  <Title>Daily stand up</Title>
+                  <Subtitle>Date</Subtitle>
+                </Body>
 
-                <Content>
-                    <Card>
+              </Header>
 
+              <ListItem itemDivider>
+                <Text>Done today:</Text>
+              </ListItem>
 
-                        <List>
-                            <Header>
+              <List>
+                {this.renderSection('todays')}
+              </List>
 
-                                <Body>
-                                <Title>Daily stand up</Title>
-                                <Subtitle>Date</Subtitle>
-                                </Body>
+              <ListItem itemDivider>
+                <Text>Will be done tomorrow:</Text>
+              </ListItem>
+              <List>
+                {this.renderSection('tomorrows')}
+              </List>
 
-                            </Header>
-
-                            <ListItem itemDivider>
-                                <Text>Done today:</Text>
-                            </ListItem>
-                            <ListItem first>
-                                <Text>{console.log(this.state.stores)}</Text>
-                            </ListItem>
-
-                            <ListItem itemDivider>
-                                <Text>Will be done tomorrow:</Text>
-                            </ListItem>
-                            <ListItem first>
-                                <Text />
-                            </ListItem>
-
-                            <ListItem itemDivider>
-                                <Text>Problems met today:</Text>
-                            </ListItem>
-                            <ListItem first>
-                                <Text />
-                            </ListItem>
-                        </List>
+              <ListItem itemDivider>
+                <Text>Problems met today:</Text>
+              </ListItem>
+              <List>
+                {this.renderSection('problems')}
+              </List>
+            </List>
 
 
-                    </Card>
-                </Content>
+          </Card>
+        </Content>
 
-            </Container>
-        );
-    }
+      </Container>
+    );
+  }
 }
