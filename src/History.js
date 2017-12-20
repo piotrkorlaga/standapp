@@ -15,30 +15,23 @@ export default class History extends Component {
 
     componentWillMount() {
         firebase.auth().currentUser.getIdToken(true)
-            .then((idToken) => {
-                axios.get(`https://standapp-e73d7.firebaseio.com/v2/users/${firebase.auth().currentUser.uid}/dailyentry.json?auth=${idToken}`)
-            .then((response) => {
+            .then(idToken => axios.get(`https://standapp-e73d7.firebaseio.com/v2/users/${firebase.auth().currentUser.uid}/dailyentry.json?auth=${idToken}`))
+            .then(response => {
                 // wyjściowy obiekt ze spłaszczoną strukturą. UID jest dopisane do val
                 const dailyEntries = _.map(response.data, (val, date) => ({ ...val, date }));
                 this.setState({ dailyEntries });
                 console.log(this.state.dailyEntries)
             })
             .catch(error => console.log('Error :: ' & error.message));
-      });
-    }
-
-    renderHistoryCard() {
-        // here we PASS THE DATA from History to HistoryCard (via dailyEntry props)
-        return this.state.dailyEntries.map(date => (
-            <HistoryCard dailyentry={date}></HistoryCard>
-        ));
     }
 
     render() {
 
         return (
             <Container>
-                {this.renderHistoryCard()}
+                {this.state.dailyEntries.map(date => (
+                    <HistoryCard key={date.date} dailyEntry={date}/>
+                ))}
             </Container>
         );
     }

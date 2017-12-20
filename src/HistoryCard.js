@@ -9,7 +9,7 @@ export default class HistoryCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dailyEntry: {},
+            date: null,
             todays: [],
             tomorrows: [],
             problems: []
@@ -18,26 +18,15 @@ export default class HistoryCard extends Component {
 
     componentWillMount() {
         // wyjściowy obiekt ze spłaszczoną strukturą. date jest dopisane do val
-        console.log(this.props.dailyentry);
-        const dailyEntry = _.map(this.props.dailyentry, (val, date) => ({ ...val, date }));
-        this.setState({ dailyEntry });
-        console.log(this.state.dailyEntry);
-        const todays = _.flatMap(this.state.dailyEntry, item => {
-            return _.map(item.today, (val, uid) => ({ ...val, uid }));
-        });
+        this.setState({date: this.props.dailyEntry.date});
+        const todays = _.map(this.props.dailyEntry.today, (val, uid) => ({ ...val, uid }));
         this.setState({todays});
-        console.log(this.state.todays);
 
-        const tomorrows = _.flatMap(this.state.dailyEntry, item => {
-            return _.map(item.tomorrow, (val, uid) => ({...val, uid}));
-        });
-        this.setState({tomorrows});
-
-        const problems = _.flatMap(this.state.dailyEntry, item => {
-            return _.map(item.problems, (val, uid) => ({...val, uid}));
-        });
+        const problems = _.map(this.props.dailyEntry.problems, (val, uid) => ({ ...val, uid }));
         this.setState({problems});
 
+        const tomorrows = _.map(this.props.dailyEntry.tomorrow, (val, uid) => ({ ...val, uid }));
+        this.setState({tomorrows});
     }
 
     renderSection(listName) {
@@ -64,7 +53,7 @@ export default class HistoryCard extends Component {
 
                                 <Body>
                                 <Title>Daily stand up</Title>
-                                <Subtitle>{`DATE: ${this.state.dailyEntry.date}`}</Subtitle>
+                                <Subtitle>{`DATE: ${this.state.date}`}</Subtitle>
                                 </Body>
 
                             </Header>
