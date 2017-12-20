@@ -11,25 +11,36 @@ export default class History extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todays: [],
-      tomorrows: [],
-      problems: [],
+        dailyEntries: [],
+        todays: [],
+        tomorrows: [],
+        problems: []
     };
   }
 
   componentWillMount() {
     firebase.auth().currentUser.getIdToken(true)
       .then((idToken) => {
-        axios.get(`https://standapp-e73d7.firebaseio.com/users/${firebase.auth().currentUser.uid}.json?auth=${idToken}`)
-          .then((response) => {
+        axios.get(`https://standapp-e73d7.firebaseio.com/v2/users/${firebase.auth().currentUser.uid}.json?auth=${idToken}`)
+            .then((response) => {
             // wyjściowy obiekt ze spłaszczoną strukturą. UID jest dopisane do val
-            const todays = _.map(response.data.inputs.today, (val, uid) => ({ ...val, uid }));
+            const dailyEntries = _.map(response.data.dailyentry, (val, date) => ({ ...val, date }));
+            this.setState({ dailyEntries });
+            console.log(this.state.dailyEntries);
+            const todays = _.flatMap(this.state.dailyEntries, item => {
+                return _.map(item.today, (val, uid) => ({ ...val, uid }));
+            });
             this.setState({ todays });
+            console.log(this.state.todays);
 
-            const tomorrows = _.map(response.data.inputs.tomorrow, (val, uid) => ({ ...val, uid }));
+            const tomorrows = _.flatMap(this.state.dailyEntries, item => {
+                return _.map(item.tomorrow, (val, uid) => ({ ...val, uid }));
+            });
             this.setState({ tomorrows });
 
-            const problems = _.map(response.data.inputs.problems, (val, uid) => ({ ...val, uid }));
+            const problems = _.flatMap(this.state.dailyEntries, item => {
+                return _.map(item.problems, (val, uid) => ({ ...val, uid }));
+            });
             this.setState({ problems });
           })
           .catch(error => console.log('Error :: ' & error.message));
@@ -60,7 +71,7 @@ export default class History extends Component {
 
                 <Body>
                   <Title>Daily stand up</Title>
-                  <Subtitle>Date</Subtitle>
+                  <Subtitle>{`DATE: ${this.props.currentDate}`}</Subtitle>
                 </Body>
 
               </Header>
