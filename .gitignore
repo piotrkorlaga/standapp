@@ -2,7 +2,8 @@
 #
 .DS_Store
 .vscode
-
+my-release-key.keystore
+gradle.properties
 # Xcode
 #
 build/

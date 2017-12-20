@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import { SpinnerComponent } from './components/Spinner';
 
-import { emailChanged, passwordChanged, loginUser, signUp } from './actions';
+import { emailChanged, passwordChanged, signUpUser } from './actions';
 
-export class LoginForm extends Component {
+export class SignUpForm extends Component {
 
     onEmailChange(text) {
         this.props.emailChanged(text);
@@ -19,12 +18,7 @@ export class LoginForm extends Component {
     onButtonPress() {
         const { email, password } = this.props;
 
-        this.props.loginUser({ email, password });
-    }
-
-    onButtonSignUpPress() {
-        Actions.signup();
-        this.props.signUp();
+        this.props.signUpUser({ email, password });
     }
 
     renderError() {
@@ -45,18 +39,18 @@ export class LoginForm extends Component {
                 <Content>
                     <Button
                         onPress={() => {
-                            const { email, password } = this.props;
+                                const { email, password } = this.props;
 
-                            if (!(email && password)) {
-                                alert('Please provide all needed data.');
-                            } else {
-                                this.onButtonPress();
+                                if (!(email && password)) {
+                                    alert('Please provide all needed data.');
+                                } else {
+                                    this.onButtonPress();
+                                }
                             }
-                        }
                         }
                         block
                     >
-                        <Text>Log in</Text>
+                        <Text>Sign me up</Text>
                     </Button>
                 </Content>
             );
@@ -91,19 +85,6 @@ export class LoginForm extends Component {
 
                     {this.renderButton()}
 
-                    <Content style={styles.signUpContentStyle}>
-
-                        <Text style={{ alignSelf: 'center', paddingBottom: 10 }}>Or</Text>
-
-                        <Button
-                            onPress={() => this.onButtonSignUpPress()}
-                            block
-                        >
-                            <Text>Sign up</Text>
-                        </Button>
-
-                    </Content>
-
                 </Content>
             </Container>
         );
@@ -117,9 +98,6 @@ const styles = {
         color: 'red'
     },
 
-    signUpContentStyle: {
-        paddingTop: 100
-    }
 };
 
 const mapStateToProps = state => {
@@ -134,5 +112,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-    emailChanged, passwordChanged, loginUser, signUp
-})(LoginForm);
+    emailChanged, passwordChanged, signUpUser
+})(SignUpForm);
