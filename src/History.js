@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import firebase from 'firebase';
-import { FlatList, ScrollView, Dimensions, ListView } from 'react-native';
 import {Container, Content, List} from 'native-base';
 import axios from 'axios';
 import HistoryCard from "./HistoryCard";
@@ -15,8 +14,10 @@ export default class History extends Component {
     }
 
     componentWillMount() {
+
+
         firebase.auth().currentUser.getIdToken(true)
-            .then(idToken => axios.get(`https://standapp-e73d7.firebaseio.com/v2/users/${firebase.auth().currentUser.uid}/dailyentry.json?auth=${idToken}`))
+            .then(idToken => axios.get(`https://standapp-e73d7.firebaseio.com/v3/teams/nomadit/users/${firebase.auth().currentUser.uid}/dailyentry.json?auth=${idToken}`))
             .then(response => {
                 // wyjściowy obiekt ze spłaszczoną strukturą. UID jest dopisane do val
                 const dailyEntries = _.map(response.data, (val, date) => ({...val, date}));

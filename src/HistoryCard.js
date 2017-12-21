@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import firebase from 'firebase';
 import _ from 'lodash';
 import {
     Body, Title, Subtitle, Container, Header,
@@ -10,6 +11,7 @@ export default class HistoryCard extends Component {
         super(props);
         this.state = {
             date: null,
+            userName: null,
             todays: [],
             tomorrows: [],
             problems: []
@@ -17,6 +19,10 @@ export default class HistoryCard extends Component {
     }
 
     componentWillMount() {
+
+        const user = firebase.auth().currentUser.email;
+        this.setState({ userName: user });
+
         // wyjściowy obiekt ze spłaszczoną strukturą. date jest dopisane do val
         this.setState({date: this.props.dailyEntry.date});
         const todays = _.map(this.props.dailyEntry.today, (val, uid) => ({ ...val, uid }));
@@ -47,7 +53,7 @@ export default class HistoryCard extends Component {
                         <List>
                             <Header>
                                 <Body>
-                                <Title>Daily stand up</Title>
+                                <Title>{`Daily stand up of: ${this.state.userName}`}</Title>
                                 <Subtitle>{`DATE: ${this.state.date}`}</Subtitle>
                                 </Body>
                             </Header>

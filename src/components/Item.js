@@ -21,7 +21,7 @@ export class Item extends Component {
         this.setState({ currentDate });
 
         const { currentUser } = firebase.auth();                    // getting access to current user in our FBDB -> firebase.auth().currentUset
-        const key = firebase.database().ref(`v2/users/${currentUser.uid}/dailyentry/${currentDate}/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
+        const key = firebase.database().ref(`v3/teams/nomadit/users/${currentUser.uid}/dailyentry/${currentDate}/${inputType}`)  // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
                                                                     // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
             .push({ input }).key;                                   // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
 
@@ -32,7 +32,7 @@ export class Item extends Component {
 
     deleteData(inputType, id) {
         const { currentUser } = firebase.auth();
-        firebase.database().ref(`v2/users/${currentUser.uid}/dailyentry/${this.state.currentDate}/${inputType}/${id}`)
+        firebase.database().ref(`v3/teams/nomadit/users/${currentUser.uid}/dailyentry/${this.state.currentDate}/${inputType}/${id}`)
             .remove();
 
         const result = this.state.inputs.filter((el) => el.key !== id);
