@@ -33,7 +33,7 @@ export const RouterComponent = () => (
                     title="Step 1/3"
                     onRight={() => Actions.tomorrow()}
                     rightTitle="Next"
-                    onLeft={() => Actions.history()}
+                    onLeft={() => Actions.main({ type: 'reset' })}
                     leftTitle="Back"
                 />
                 <Scene

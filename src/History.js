@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import _ from 'lodash';
 import firebase from 'firebase';
-import { Container } from 'native-base';
+import {Container, Content, List} from 'native-base';
 import axios from 'axios';
 import HistoryCard from "./HistoryCard";
 
@@ -18,9 +18,9 @@ export default class History extends Component {
             .then(idToken => axios.get(`https://standapp-e73d7.firebaseio.com/v2/users/${firebase.auth().currentUser.uid}/dailyentry.json?auth=${idToken}`))
             .then(response => {
                 // wyjściowy obiekt ze spłaszczoną strukturą. UID jest dopisane do val
-                const dailyEntries = _.map(response.data, (val, date) => ({ ...val, date }));
-                this.setState({ dailyEntries });
-                console.log(this.state.dailyEntries)
+                const dailyEntries = _.map(response.data, (val, date) => ({...val, date}));
+                this.setState({dailyEntries});
+                console.log(this.state.dailyEntries);
             })
             .catch(error => console.log('Error :: ' & error.message));
     }
@@ -29,9 +29,13 @@ export default class History extends Component {
 
         return (
             <Container>
-                {this.state.dailyEntries.map(date => (
-                    <HistoryCard key={date.date} dailyEntry={date}/>
-                ))}
+                <Content>
+                    <List>
+                        {this.state.dailyEntries.map(date => (
+                            <HistoryCard key={date.date} dailyEntry={date}/>
+                        ))}
+                    </List>
+                </Content>
             </Container>
         );
     }
