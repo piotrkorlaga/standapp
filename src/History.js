@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import firebase from 'firebase';
+import { FlatList, ScrollView, Dimensions, ListView } from 'react-native';
 import {Container, Content, List} from 'native-base';
 import axios from 'axios';
 import HistoryCard from "./HistoryCard";
@@ -28,15 +29,17 @@ export default class History extends Component {
     render() {
 
         return (
-            <Container>
-                <Content>
-                    <List>
-                        {this.state.dailyEntries.map(date => (
-                            <HistoryCard key={date.date} dailyEntry={date}/>
-                        ))}
-                    </List>
-                </Content>
-            </Container>
+
+                <Container>
+                    <Content>
+                        <List>
+                            {this.state.dailyEntries.map(date => (
+                                <HistoryCard key={date.date} dailyEntry={date}/>
+                            ))}
+                        </List>
+                    </Content>
+                </Container>
+
         );
     }
 }

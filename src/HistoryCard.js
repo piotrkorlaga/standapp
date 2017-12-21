@@ -43,19 +43,13 @@ export default class HistoryCard extends Component {
 
     render() {
         return (
-            <Container>
-
-                <Content>
                     <Card>
-
                         <List>
                             <Header>
-
                                 <Body>
                                 <Title>Daily stand up</Title>
                                 <Subtitle>{`DATE: ${this.state.date}`}</Subtitle>
                                 </Body>
-
                             </Header>
 
                             <ListItem itemDivider>
@@ -80,12 +74,7 @@ export default class HistoryCard extends Component {
                                 {this.renderSection('problems')}
                             </List>
                         </List>
-
-
                     </Card>
-                </Content>
-
-            </Container>
         );
     }
 }
