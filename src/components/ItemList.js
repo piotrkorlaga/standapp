@@ -26,10 +26,10 @@ export const ItemList = ({ prop, pressDelete }) => {
 
 const styles = {
   containerStyle: {
-      height: 40,
       alignItems: 'center',
       alignContent: 'center',
       flexDirection: 'row',
+      flexWrap: 'wrap',
       backgroundColor: 'yellow',
       borderWidth: 2,
       borderRadius: 2,
@@ -45,6 +45,8 @@ const styles = {
       marginLeft: 5,
       alignItems: 'center',
       alignContent: 'center',
+      marginTop: 5,
+      marginBottom: 5
   },
   buttonTextStyle: {
       fontSize: 20,

@@ -19,7 +19,7 @@ export const RouterComponent = () => (
 
             <Scene key="main">
                 <Scene
-                    key="historycard"
+                    key="userhistory"
                     component={History}
                     title="User's history"
                     onRight={() => Actions.today()}
@@ -33,7 +33,7 @@ export const RouterComponent = () => (
                     title="Step 1/3"
                     onRight={() => Actions.tomorrow()}
                     rightTitle="Next"
-                    onLeft={() => Actions.main({ type: 'reset' })}
+                    onLeft={() => Actions.main({ type: 'reset' })} // makes back arrow on 'userhistory' disappeared
                     leftTitle="Back"
                 />
                 <Scene
