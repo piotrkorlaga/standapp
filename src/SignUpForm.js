@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { Spinner } from './components/Spinner';
-
 import { emailChanged, passwordChanged, signUpUser } from './actions';
 
 class SignUpForm extends Component {
+  constructor() {
+    super();
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.onSignUpButtonPressed = this.onSignUpButtonPressed.bind(this);
+  }
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -14,9 +20,13 @@ class SignUpForm extends Component {
     this.props.passwordChanged(text);
   }
 
-  onButtonPress() {
+  onSignUpButtonPressed() {
     const { email, password } = this.props;
-    this.props.signUpUser({ email, password });
+    if (!(email && password)) {
+      console.error('Please provide all needed data.');
+    } else {
+      this.props.signUpUser({ email, password });
+    }
   }
 
   renderError() {
@@ -27,6 +37,7 @@ class SignUpForm extends Component {
         </Text>
       );
     }
+    return null;
   }
 
   renderButton() {
@@ -36,15 +47,7 @@ class SignUpForm extends Component {
     return (
       <Content>
         <Button
-          onPress={() => {
-                                const { email, password } = this.props;
-                                if (!(email && password)) {
-                                    alert('Please provide all needed data.');
-                                } else {
-                                    this.onButtonPress();
-                                }
-                            }
-                        }
+          onPress={this.onSignUpButtonPressed}
           block
         >
           <Text>Sign me up</Text>
@@ -61,8 +64,7 @@ class SignUpForm extends Component {
             <Item floatingLabel>
               <Label>user@domain.com</Label>
               <Input
-                onChangeText={this.onEmailChange.bind(this)}
-                value={this.props.email}
+                onChangeText={this.onEmailChange}
               />
             </Item>
 
@@ -71,8 +73,7 @@ class SignUpForm extends Component {
               <Input
                 autoCorrect={false}
                 secureTextEntry={false}
-                onChangeText={this.onPasswordChange.bind(this)}
-                value={this.props.password}
+                onChangeText={this.onPasswordChange}
               />
             </Item>
 
@@ -94,20 +95,19 @@ const styles = {
     alignSelf: 'center',
     color: 'red',
   },
-
 };
 
 const mapStateToProps = (state) => {
   const {
     email, password, error, loading,
   } = state.auth;
-
-  return {
+  const result = {
     email,
     password,
     error,
     loading,
   };
+  return result;
 };
 
 export default connect(mapStateToProps, {

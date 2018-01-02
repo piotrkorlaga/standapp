@@ -32,7 +32,7 @@ export class Item extends Component {
 
   deleteData(inputType, id) {
     const { currentUser } = firebase.auth();
-    firebase.database().ref(`v3/teams/nomadit/users/    ${currentUser.uid}/dailyentry/${this.state.currentDate}/${inputType}/${id}`)
+    firebase.database().ref(`v3/teams/nomadit/users/${currentUser.uid}/dailyentry/${this.state.currentDate}/${inputType}/${id}`)
       .remove();
 
     const result = this.state.inputs.filter(el => el.key !== id);
@@ -47,10 +47,7 @@ export class Item extends Component {
         <TextInput
           ref={(component) => { this.inputToClear = component; }}
           style={styles.textInputStyle}
-          onChangeText={(text) => {
-                                    this.setState({ input: text });
-}
-                            }
+          onChangeText={text => this.setState({ input: text })}
           multiline
           placeholder={this.props.placeholder}
         />
