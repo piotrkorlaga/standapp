@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-
 import { emailChanged, passwordChanged, loginUser } from './actions';
 
 const styles = {
@@ -11,7 +10,6 @@ const styles = {
     alignSelf: 'center',
     color: 'red',
   },
-
   signUpContentStyle: {
     paddingTop: 100,
   },
@@ -36,7 +34,6 @@ class LoginForm extends Component {
 
   onLoginButtonPress() {
     const { email, password } = this.props;
-
     if (!(email && password)) {
       console.error('Please provide all needed data.');
     } else {

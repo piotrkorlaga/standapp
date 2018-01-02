@@ -36,8 +36,7 @@ export default class HistoryCard extends Component {
   }
 
   renderSection(listName) {
-    // uważać na metodę dostępu do tablicy przez [`${}`]. Przy pisaniu apki webowej
-    // nazwy zmiennych są często skracane, więc lepiej je hardcodować.
+    // uważać na metodę dostępu do tablicy przez [`${variable}`]. Przy pisaniu apki webowej nazwy zmiennych są często skracane, więc lepiej je hardcodować.
     return this.state[`${listName}`].map(data => (
       <ListItem key={data.uid}>
         <Text>
@@ -57,22 +56,18 @@ export default class HistoryCard extends Component {
               <Subtitle>{`DATE: ${this.state.date}`}</Subtitle>
             </Body>
           </Header>
-
           <ListItem itemDivider>
             <Text>Done today:</Text>
           </ListItem>
-
           <List>
             {this.renderSection('todays')}
           </List>
-
           <ListItem itemDivider>
             <Text>Will be done tomorrow:</Text>
           </ListItem>
           <List>
             {this.renderSection('tomorrows')}
           </List>
-
           <ListItem itemDivider>
             <Text>Problems met today:</Text>
           </ListItem>

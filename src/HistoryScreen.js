@@ -44,13 +44,11 @@ export class HistoryScreen extends Component {
 
   render() {
     return (
-
       <Container>
         <Content>
           {/* <UserHistoryCard /> */}
         </Content>
       </Container>
-
     );
   }
 }

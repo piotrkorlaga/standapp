@@ -4,8 +4,8 @@ import { Item } from './components/Item';
 import { HeaderSection } from './components/HeaderSection';
 
 export const TomorrowScreen = () => (
-        <View>
-            <HeaderSection headerSectionTitle={'What will you do next day?'} />
-            <Item placeholder={'Thing to do next day'} inputType="tomorrow" />
-        </View>
-    );
+  <View>
+    <HeaderSection headerSectionTitle="What will you do next day?" />
+    <Item placeholder="Thing to do next day" inputType="tomorrow" />
+  </View>
+);
