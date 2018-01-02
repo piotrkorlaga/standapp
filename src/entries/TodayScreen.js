@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Item } from './components/Item';
-import { HeaderSection } from './components/HeaderSection';
+import { Item } from './Entry';
+import { HeaderSection } from './HeaderSection';
 
 export const TodayScreen = () => (
   <View>

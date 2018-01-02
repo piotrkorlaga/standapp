@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
-import { LOGIN_USER_SUCCESS } from './src/actions/actions';
-import Store from './src/StoreConfig';
-import RouterComponent from './src/Router';
+import { LOGIN_USER_SUCCESS } from './actions/actions';
+import Store from './StoreConfig';
+import RouterComponent from './Router';
 
 export default class App extends Component {
   componentWillMount() {

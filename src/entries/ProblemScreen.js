@@ -1,7 +1,7 @@
 import { Content, Button, Text } from 'native-base';
 import React from 'react';
-import { Item } from './components/Item';
-import { HeaderSection } from './components/HeaderSection';
+import { Item } from './Entry';
+import { HeaderSection } from './HeaderSection';
 
 export const ProblemScreen = () => (
   <Content>

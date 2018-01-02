@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Scene, Router, Actions, Stack } from 'react-native-router-flux';
-import LoginForm from './LoginForm';
-import SignUpForm from './SignUpForm';
-import { HistoryScreen } from './HistoryScreen';
-import { TodayScreen } from './TodayScreen';
-import { TomorrowScreen } from './TomorrowScreen';
-import { ProblemScreen } from './ProblemScreen';
-import { Spinner } from './components/Spinner';
+import LoginForm from './authentication/LoginForm';
+import SignUpForm from './authentication/SignUpForm';
+import { HistoryScreen } from './history/HistoryScreen';
+import { TodayScreen } from './entries/TodayScreen';
+import { TomorrowScreen } from './entries/TomorrowScreen';
+import { ProblemScreen } from './entries/ProblemScreen';
+import { Spinner } from './core/Spinner';
 
 class RouterComponent extends Component {
   constructor() {

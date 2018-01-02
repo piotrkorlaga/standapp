@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { format } from 'date-fns';
 import { View, TextInput } from 'react-native';
-import { AddInputButton } from './Button';
-import { ItemList } from './ItemList';
+import { AddInputButton } from './AddInputButton';
+import { ItemList } from './EntryList';
 
 
 export class Item extends Component {
@@ -12,22 +12,32 @@ export class Item extends Component {
     this.state = { input: '' };
     this.state.inputs = [];
     this.state.currentDate = {};
+    this.saveData = this.saveData.bind(this);
   }
 
-  saveData(inputType) {
-    const { input } = this.state;
+  saveData() {
+    if (this.state.input) {
+      const inputType = this.props.inputType;
+      const { input } = this.state;
+      const currentDate = format(new Date(), 'DD-MM-YYYY');
+      this.setState({ currentDate });
 
-    const currentDate = format(new Date(), 'DD-MM-YYYY');
-    this.setState({ currentDate });
+      const { currentUser } = firebase.auth(); // getting access to current user in our FBDB -> firebase.auth().currentUset
+      const key = firebase.database().ref(`v3/teams/nomadit/users/${currentUser.uid}/dailyentry/${currentDate}/${inputType}`) // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
+        // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
+        .push({ input }).key; // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
 
-    const { currentUser } = firebase.auth(); // getting access to current user in our FBDB -> firebase.auth().currentUset
-    const key = firebase.database().ref(`v3/teams/nomadit/users/${currentUser.uid}/dailyentry/${currentDate}/${inputType}`) // get access to our FBDB and make a reference to pointed location (it's path to a JSON data store). Then we made string interpolation.
-      // there we have a TOP collection of users, then a uid, and then a collection of inputs (it's our DB and JSON schema we created)
-      .push({ input }).key; // After making a ref we want to do specific operation in this location. Push made data be saved in DB.
-
-    this.setState({ inputs: [...this.state.inputs, { input: this.state.input, key }] });
-    this.inputToClear.clear();
-    this.setState({ input: '' });
+      this.setState({
+        inputs: [...this.state.inputs, {
+          input: this.state.input,
+          key,
+        }],
+      });
+      this.inputToClear.clear();
+      this.setState({ input: '' });
+    } else {
+      alert('Pass some data.');
+    }
   }
 
   deleteData(inputType, id) {
@@ -58,19 +68,11 @@ export class Item extends Component {
             prop={element.input}
             pressDelete={() => this.deleteData(this.props.inputType, element.key)}
           />))
-                }
-
+         }
 
         <AddInputButton
           style={styles.buttonSectionStyle}
-          onPress={() => {
-                        if (this.state.input) {
-                            this.saveData(this.props.inputType);
-                        } else {
-                            alert('Pass some data.');
-                        }
-                    }
-                    }
+          onPress={this.saveData}
         >
                     +
         </AddInputButton>

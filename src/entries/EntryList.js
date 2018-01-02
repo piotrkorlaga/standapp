@@ -22,7 +22,6 @@ export const ItemList = ({ prop, pressDelete }) => {
   );
 };
 
-
 const styles = {
   containerStyle: {
     alignItems: 'center',

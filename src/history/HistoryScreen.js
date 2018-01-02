@@ -4,7 +4,7 @@ import _ from 'lodash';
 import firebase from 'firebase';
 import axios from 'axios';
 import UserHistoryCard from './UserHistoryCard';
-import { DailyEntry } from './DailyEntry';
+import { DailyEntry } from '../entries/DailyEntry';
 import { User } from './User';
 
 // ściąga wpisy całego teamu i grupuje po userze

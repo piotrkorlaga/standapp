@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
-
 export const AddInputButton = ({ onPress, children }) => (
   <TouchableOpacity
     style={styles.buttonStyle}
@@ -10,7 +9,6 @@ export const AddInputButton = ({ onPress, children }) => (
     <Text style={styles.buttonTextStyle}>{children}</Text>
   </TouchableOpacity>
 );
-
 
 const styles = {
   buttonStyle: {
@@ -27,12 +25,10 @@ const styles = {
     marginRight: 10,
     marginBottom: 10,
     marginTop: 10,
-
   },
   buttonTextStyle: {
     fontSize: 44,
     fontWeight: '300',
     color: '#F8F8F8',
-
   },
 };
