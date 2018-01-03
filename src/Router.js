@@ -19,7 +19,7 @@ class RouterComponent extends Component {
     firebase.auth().signOut().then(() => {
       console.log('Logout from firebase successful');
     }, (error) => {
-      console.log(error);
+      alert(error);
     });
   }
 

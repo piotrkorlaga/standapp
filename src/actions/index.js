@@ -45,16 +45,14 @@ export const loginUser = ({ email, password }) => (dispatch) => {
   dispatch({ type: LOGIN_USER_START });
   console.log('logging in');
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((user) => { loginUserSuccess(dispatch, user); })
-    .catch((error) => {
-      console.log(error);
-      loginUserFail(dispatch);
-    });
+    .then(user => loginUserSuccess(dispatch, user))
+    .catch(error => loginUserFail(dispatch, error));
 };
 
 // Helpers methods to loginUser reduxThunk's Action Creator
-const loginUserFail = (dispatch) => {
+const loginUserFail = (dispatch, error) => {
   dispatch({ type: LOGIN_USER_FAIL });
+  console.log(error.message);
 };
 
 const loginUserSuccess = (dispatch, user) => {

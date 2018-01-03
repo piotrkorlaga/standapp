@@ -6,7 +6,7 @@ import { AddInputButton } from './AddInputButton';
 import { ItemList } from './EntryList';
 
 
-export class Item extends Component {
+export class Entry extends Component {
   constructor(props) {
     super(props);
     this.state = { input: '' };
