@@ -8,6 +8,7 @@ import { TodayScreen } from './entries/TodayScreen';
 import { TomorrowScreen } from './entries/TomorrowScreen';
 import { ProblemScreen } from './entries/ProblemScreen';
 import { Spinner } from './core/Spinner';
+import { Footer } from './Footer';
 
 class RouterComponent extends Component {
   constructor() {
@@ -42,6 +43,7 @@ class RouterComponent extends Component {
             />
           </Scene>
           <Scene key="main">
+            <Scene key="footer" component={Footer} />
             <Scene
               key="userhistory"
               component={HistoryScreen}

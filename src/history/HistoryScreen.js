@@ -1,4 +1,4 @@
-import { Container, Content } from 'native-base';
+import { Container, Content, Footer as NativeBaseFooter } from 'native-base';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import firebase from 'firebase';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import { UserHistoryCard } from './UserHistoryCard';
 import { DailyEntry } from './DailyEntry';
 import { User } from './User';
+import { Footer } from '../Footer';
 
 // ściąga wpisy całego teamu i grupuje po userze
 export class HistoryScreen extends Component {
@@ -55,6 +56,9 @@ export class HistoryScreen extends Component {
             <UserHistoryCard key={user.id} user={user} />
            ))}
         </Content>
+        <NativeBaseFooter>
+          <Footer />
+        </NativeBaseFooter>
       </Container>
     );
   }
