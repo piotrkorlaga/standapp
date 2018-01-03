@@ -3,10 +3,10 @@ import firebase from 'firebase';
 import { format } from 'date-fns';
 import { View, TextInput } from 'react-native';
 import { AddInputButton } from './AddInputButton';
-import { ItemList } from './EntryList';
+import { DailyEntryList } from './DailyEntryList';
 
 
-export class Entry extends Component {
+export class DailyEntry extends Component {
   constructor(props) {
     super(props);
     this.state = { input: '' };
@@ -63,7 +63,7 @@ export class Entry extends Component {
         />
 
         {this.state.inputs.map((element, index) =>
-          (<ItemList
+          (<DailyEntryList
             key={index}
             prop={element.input}
             pressDelete={() => this.deleteData(this.props.inputType, element.key)}
