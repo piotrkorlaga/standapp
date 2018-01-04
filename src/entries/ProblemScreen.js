@@ -7,8 +7,5 @@ export const ProblemScreen = () => (
   <Content>
     <HeaderSection headerSectionTitle="What problems did you meet today?" />
     <DailyEntry placeholder="Problem you met" inputType="problems" />
-    <Button block success onPress={() => alert('To be continued')}>
-      <Text>Submit changes</Text>
-    </Button>
   </Content>
 );

@@ -17,7 +17,7 @@ export class DailyEntry extends Component {
 
   saveData() {
     if (this.state.input) {
-      const inputType = this.props.inputType;
+      const { inputType } = this.props;
       const { input } = this.state;
       const currentDate = format(new Date(), 'DD-MM-YYYY');
       this.setState({ currentDate });
