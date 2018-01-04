@@ -13,7 +13,6 @@ export class HistoryScreen extends Component {
     super(props);
     this.state = {
       users: [],
-      teamKeys: '',
     };
   }
   // tutaj wyciągam wszystkie dane z fb userów z konkretnego teamu, które będę przekazywał do kolejnych komponentów i renderował

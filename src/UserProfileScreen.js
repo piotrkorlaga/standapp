@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 import React, { Component } from 'react';
-import { Container, Content, Footer as NativeBaseFooter, Text, Button } from 'native-base';
-import { Footer } from './Footer';
+import { Container, Content, Text, Button } from 'native-base';
 
 export class UserProfileScreen extends Component {
   constructor() {

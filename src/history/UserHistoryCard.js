@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import HistoryCard from './HistoryCard';
 
 export class UserHistoryCard extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       dailyEntries: [],
