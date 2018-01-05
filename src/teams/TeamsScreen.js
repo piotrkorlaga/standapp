@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Container, Content, Tab, Tabs, Button, Text, Form, Item, Header, Input, Title } from 'native-base';
+import { Container, Content, Tab, Tabs, Button, Text, Form, Item, Input } from 'native-base';
 import { TeamMember } from './TeamMember';
 import { DailyEntry } from '../history/DailyEntry';
 import { User } from '../history/User';
@@ -15,7 +15,7 @@ export class TeamsScreen extends Component {
     this.state = {
       teamMembers: [],
       visibleModal: false,
-      groupName: '',
+      teamName: '',
     };
     this.renderModalContent = this.renderModalContent.bind(this);
     this.createGroup = this.createGroup.bind(this);
@@ -48,7 +48,15 @@ export class TeamsScreen extends Component {
   }
 
   createGroup() {
+    if (this.state.teamName) {
+      const name = this.state.teamName;
+      firebase.database().ref('v3/teams/')
+        .push({ name });
+      this.setState({ teamName: '' });
       this.setState({ visibleModal: false });
+    } else {
+      this.setState({ visibleModal: false });
+    }
   }
 
   renderModalContent() {
@@ -81,9 +89,8 @@ export class TeamsScreen extends Component {
                 <Item fixedLabel>
                   <Item regular>
                     <Input
-                      placeholder="Group name"
-                      ref={(component) => { this.inputToClear = component; }}
-                      // onChangeText={groupName => this.setState({ groupName })}
+                      placeholder="Team name"
+                      onChangeText={teamName => this.setState({ teamName })}
                     />
                   </Item>
                 </Item>
@@ -105,10 +112,6 @@ const styles = {
     padding: 10,
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
-    alignItems: 'center',
-  },
-  centerContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: 'center',
   },
 };
