@@ -1,3 +1,4 @@
+import { Container } from 'native-base';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
@@ -5,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import { LOGIN_USER_SUCCESS } from './actions/actions';
 import Store from './StoreConfig';
 import RouterComponent from './Router';
+import { Footer } from './Footer';
 
 export default class App extends Component {
   componentWillMount() {
@@ -28,7 +30,10 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={Store}>
-        <RouterComponent />
+        <Container>
+          <RouterComponent />
+          <Footer />
+        </Container>
       </Provider>
     );
   }

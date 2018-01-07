@@ -53,7 +53,7 @@ export class HistoryScreen extends Component {
         <Content>
           {this.state.users.map(user => (
             <UserHistoryCard key={user.id} user={user} />
-           ))}
+      ))}
         </Content>
       </Container>
     );
