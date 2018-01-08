@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Container, Content, Tab, Tabs, Button, Text, Form, Item, Input } from 'native-base';
+import { Container, Content, Tab, Tabs, Button, Text, Item, Input } from 'native-base';
 import { TeamMember } from './TeamMember';
 import { DailyEntry } from '../history/DailyEntry';
 import { User } from '../history/User';
@@ -17,10 +17,12 @@ export class TeamsScreen extends Component {
       visibleCreateTeamModal: false,
       visibleInviteUserModal: false,
       teamName: '',
+      userEmail: '',
     };
-    this.renderModalContent = this.renderModalContent.bind(this);
     this.createGroup = this.createGroup.bind(this);
+    this.inviteUser = this.inviteUser.bind(this);
   }
+
 
   componentWillMount() {
     let token = null;
@@ -60,9 +62,14 @@ export class TeamsScreen extends Component {
     }
   }
 
-  renderModalContent() {
-    this.setState({ visibleCreateTeamModal: true });
-    this.setState({ visibleInviteUserModal: true });
+  inviteUser() {
+    if (this.state.userEmail) {
+      // code to handle sending the invite to userEmail's account
+      this.setState({ userEmail: '' });
+      this.setState({ visibleInviteUserModal: false });
+    } else {
+      this.setState({ visibleInviteUserModal: false });
+    }
   }
 
   render() {
@@ -79,7 +86,7 @@ export class TeamsScreen extends Component {
             style={{ margin: 10 }}
             primary
             block
-            onPress={this.renderModalContent}
+            onPress={() => this.setState({ visibleCreateTeamModal: true })}
           >
             <Text>Create new team</Text>
           </Button>
@@ -87,10 +94,11 @@ export class TeamsScreen extends Component {
             style={{ margin: 10 }}
             primary
             block
-            onPress={() => alert('Ok.')}
+            onPress={() => this.setState({ visibleInviteUserModal: true })}
           >
             <Text>Invite user</Text>
           </Button>
+
           <Modal
             isVisible={this.state.visibleCreateTeamModal}
           >
@@ -110,6 +118,29 @@ export class TeamsScreen extends Component {
                 onPress={this.createGroup}
               >
                 <Text>Save and close</Text>
+              </Button>
+            </View>
+          </Modal>
+
+          <Modal
+            isVisible={this.state.visibleInviteUserModal}
+          >
+            <View style={styles.modalContent}>
+              <Text style={styles.modalPartsPosition}>Please enter user's email</Text>
+              <Item
+                style={styles.modalPartsPosition}
+                regular
+              >
+                <Input
+                  placeholder="User's email"
+                  onChangeText={userEmail => this.setState({ userEmail })}
+                />
+              </Item>
+              <Button
+                style={styles.modalPartsPosition}
+                onPress={this.inviteUser}
+              >
+                <Text>Invite</Text>
               </Button>
             </View>
           </Modal>
