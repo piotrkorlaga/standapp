@@ -14,7 +14,8 @@ export class TeamsScreen extends Component {
     super(props);
     this.state = {
       teamMembers: [],
-      visibleModal: false,
+      visibleCreateTeamModal: false,
+      visibleInviteUserModal: false,
       teamName: '',
     };
     this.renderModalContent = this.renderModalContent.bind(this);
@@ -53,14 +54,15 @@ export class TeamsScreen extends Component {
       firebase.database().ref('v3/teams/')
         .push({ name });
       this.setState({ teamName: '' });
-      this.setState({ visibleModal: false });
+      this.setState({ visibleCreateTeamModal: false });
     } else {
-      this.setState({ visibleModal: false });
+      this.setState({ visibleCreateTeamModal: false });
     }
   }
 
   renderModalContent() {
-    this.setState({ visibleModal: true });
+    this.setState({ visibleCreateTeamModal: true });
+    this.setState({ visibleInviteUserModal: true });
   }
 
   render() {
@@ -74,30 +76,41 @@ export class TeamsScreen extends Component {
             <TeamMember key={teamMember.id} teamMember={teamMember} />
             ))}
           <Button
+            style={{ margin: 10 }}
             primary
             block
             onPress={this.renderModalContent}
           >
             <Text>Create new team</Text>
           </Button>
+          <Button
+            style={{ margin: 10 }}
+            primary
+            block
+            onPress={() => alert('Ok.')}
+          >
+            <Text>Invite user</Text>
+          </Button>
           <Modal
-            isVisible={this.state.visibleModal}
+            isVisible={this.state.visibleCreateTeamModal}
           >
             <View style={styles.modalContent}>
-              <Form>
-                <Text>Please enter the team name</Text>
-                <Item fixedLabel>
-                  <Item regular>
-                    <Input
-                      placeholder="Team name"
-                      onChangeText={teamName => this.setState({ teamName })}
-                    />
-                  </Item>
-                </Item>
-                <Button onPress={this.createGroup}>
-                  <Text>Save and close</Text>
-                </Button>
-              </Form>
+              <Text style={styles.modalPartsPosition}>Please enter the team name</Text>
+              <Item
+                style={styles.modalPartsPosition}
+                regular
+              >
+                <Input
+                  placeholder="Team name"
+                  onChangeText={teamName => this.setState({ teamName })}
+                />
+              </Item>
+              <Button
+                style={styles.modalPartsPosition}
+                onPress={this.createGroup}
+              >
+                <Text>Save and close</Text>
+              </Button>
             </View>
           </Modal>
         </Content>
@@ -109,9 +122,11 @@ export class TeamsScreen extends Component {
 const styles = {
   modalContent: {
     backgroundColor: 'white',
-    padding: 10,
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalPartsPosition: {
+    margin: 10,
     alignSelf: 'center',
   },
 };
