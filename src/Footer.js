@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Footer as FooterNativeBase, FooterTab, Button, Text, Icon } from 'native-base';
+import { Footer as FooterNativeBase, FooterTab, Button, Text, Icon, Badge } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
 export class Footer extends Component {
@@ -14,6 +14,9 @@ export class Footer extends Component {
     this.onTeamButtonPress = this.onTeamButtonPress.bind(this);
     this.onUserProfileButtonPress = this.onUserProfileButtonPress.bind(this);
   }
+
+  // componentWillMount { auth -> event .on nazwa eventu (funkcja)}
+  // event listenera (nasłuchuje czy zostao coś dodane) w FB (nie axios!) na url /users/currentUser.uid/invitations -> jeżeli są nowe, automatycznie wyświetl badge
 
   onHomeButtonPress() {
     Actions.main();
@@ -41,6 +44,7 @@ export class Footer extends Component {
       <FooterNativeBase>
         <FooterTab>
           <Button
+            vertical
             onPress={this.onHomeButtonPress}
             active={this.state.activeHome}
           >
@@ -48,13 +52,17 @@ export class Footer extends Component {
             <Text>Home</Text>
           </Button>
           <Button
+            badge
+            vertical
             onPress={this.onTeamButtonPress}
             active={this.state.activeTeam}
           >
+            <Badge><Text>1</Text></Badge>
             <Icon name="ios-people" />
             <Text>Teams</Text>
           </Button>
           <Button
+            vertical
             onPress={this.onUserProfileButtonPress}
             active={this.state.activeUserProfile}
           >

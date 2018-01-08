@@ -8,6 +8,7 @@ import { Container, Content, Tab, Tabs, Button, Text, Item, Input } from 'native
 import { TeamMember } from './TeamMember';
 import { DailyEntry } from '../history/DailyEntry';
 import { User } from '../history/User';
+import { Invitation } from './Invitation';
 
 export class TeamsScreen extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export class TeamsScreen extends Component {
       teamMembers: [],
       visibleCreateTeamModal: false,
       visibleInviteUserModal: false,
+      token: '',
       teamName: '',
       userEmail: '',
     };
@@ -29,6 +31,7 @@ export class TeamsScreen extends Component {
     firebase.auth().currentUser.getIdToken(true)
       .then((idToken) => {
         token = idToken;
+        this.setState({ token });
         return axios.get(`https://standapp-e73d7.firebaseio.com/v3/users/${firebase.auth().currentUser.uid}/teamkey.json?auth=${idToken}`);
       }).then((response) => {
         const teamKey = response.data;
@@ -64,7 +67,18 @@ export class TeamsScreen extends Component {
 
   inviteUser() {
     if (this.state.userEmail) {
-      // code to handle sending the invite to userEmail's account
+      const idToken = this.state.token;
+      const email = this.state.userEmail;
+      console.log(idToken);
+      axios.get(`https://standapp-e73d7.firebaseio.com/v3/users.json?auth=${idToken}&orderBy="email"&equalTo="${email}"`) // zalogowany user (auth) pobiera użytkownika z tabeli
+      // users poprzez posortowanie (orderBy) i filtrowanie (equalTo)
+        .then((user) => {
+          console.log(user);
+          const id = _.map(user.data, (userData, uid) => uid)[0]; // interesuje nas tylko tabela z uid, więc ją zwracamy i przypiujemy wartosć z indeksu[0] do zmiennej id
+          console.log(id);
+          axios.post(`https://standapp-e73d7.firebaseio.com/v3/users/${id}/invitations.json?auth=${idToken}`, new Invitation(firebase.auth().currentUser.uid));
+        })
+        .catch(error => console.log(error));
       this.setState({ userEmail: '' });
       this.setState({ visibleInviteUserModal: false });
     } else {
@@ -117,7 +131,7 @@ export class TeamsScreen extends Component {
                 style={styles.modalPartsPosition}
                 onPress={this.createGroup}
               >
-                <Text>Save and close</Text>
+                <Text>Save</Text>
               </Button>
             </View>
           </Modal>
