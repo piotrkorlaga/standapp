@@ -5,14 +5,13 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import {
-  Container, Content, Tab, Tabs, Button, Text, Item, Input, Card, CardItem, Right,
-  Left,
+  Container, Content, Tab, Tabs, Button, Text, Item, Input, Card,
 } from 'native-base';
 import { TeamMember } from './TeamMember';
 import { DailyEntry } from '../history/DailyEntry';
 import { User } from '../history/User.Model';
 import { Invitation } from './Invitation.Model';
-import {Invitations} from "./Invitations";
+import { Invitations } from './Invitations';
 
 export class TeamsScreen extends Component {
   constructor(props) {
@@ -119,7 +118,6 @@ export class TeamsScreen extends Component {
               <Text>Invite user</Text>
             </Button>
           </Card>
-
 
           <Modal
             isVisible={this.state.visibleCreateTeamModal}
