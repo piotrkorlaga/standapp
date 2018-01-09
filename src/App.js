@@ -8,7 +8,7 @@ import { LOGIN_USER_SUCCESS } from './actions/actions';
 import Store from './StoreConfig';
 import RouterComponent from './Router';
 import { Footer } from './Footer';
-import { Invitation } from './teams/Invitation';
+import { Invitation } from './teams/Invitation.Model';
 
 export default class App extends Component {
   constructor() {
@@ -40,7 +40,7 @@ export default class App extends Component {
             this.setState({ unreadInvitations });
           }
           console.log(snapshot.val());
-          console.log('unreadInvitations:', this.state.unreadInvitations);
+          console.log('unreadInvitations.length:', this.state.unreadInvitations.length);
         });
         Actions.main();
       } else {

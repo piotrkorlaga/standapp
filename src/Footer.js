@@ -87,7 +87,8 @@ export class Footer extends Component {
             <Icon name="ios-home" />
             <Text>Home</Text>
           </Button>
-          {this.renderTeamButton()}
+          {this.renderTeamButtonWithBadge()}
+          {console.log('this.props.invitations: ', this.props.invitations)}
           <Button
             vertical
             onPress={this.onUserProfileButtonPress}

@@ -4,11 +4,15 @@ import Modal from 'react-native-modal';
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Container, Content, Tab, Tabs, Button, Text, Item, Input } from 'native-base';
+import {
+  Container, Content, Tab, Tabs, Button, Text, Item, Input, Card, CardItem, Right,
+  Left,
+} from 'native-base';
 import { TeamMember } from './TeamMember';
 import { DailyEntry } from '../history/DailyEntry';
-import { User } from '../history/User';
-import { Invitation } from './Invitation';
+import { User } from '../history/User.Model';
+import { Invitation } from './Invitation.Model';
+import {Invitations} from "./Invitations";
 
 export class TeamsScreen extends Component {
   constructor(props) {
@@ -36,9 +40,9 @@ export class TeamsScreen extends Component {
         const teamKey = response.data;
         if (teamKey) {
           axios.get(`https://standapp-e73d7.firebaseio.com/v3/teams/${teamKey}/users.json?auth=${token}`)
-            .then((response) => {
-              console.log('response: ', response);
-              const teamMembers = _.map(response.data, (userDailyEntries, uid) => {
+            .then((teamResponse) => {
+              console.log('response: ', teamResponse);
+              const teamMembers = _.map(teamResponse.data, (userDailyEntries, uid) => {
                 const dailyEntries = _.map(userDailyEntries.dailyentry, (dailyEntry, date) => new DailyEntry(date, dailyEntry.today, dailyEntry.tomorrows, dailyEntry.problems));
                 return new User(uid, uid, dailyEntries);
               });
@@ -91,25 +95,31 @@ export class TeamsScreen extends Component {
           <Tabs initialPage={1}>
             <Tab heading="NomadIT" />
           </Tabs>
-          {this.state.teamMembers.map(teamMember => (
-            <TeamMember key={teamMember.id} teamMember={teamMember} />
+
+          <Invitations />
+
+          <Card>
+            {this.state.teamMembers.map(teamMember => (
+              <TeamMember key={teamMember.id} teamMember={teamMember} />
             ))}
-          <Button
-            style={{ margin: 10 }}
-            primary
-            block
-            onPress={() => this.setState({ visibleCreateTeamModal: true })}
-          >
-            <Text>Create new team</Text>
-          </Button>
-          <Button
-            style={{ margin: 10 }}
-            primary
-            block
-            onPress={() => this.setState({ visibleInviteUserModal: true })}
-          >
-            <Text>Invite user</Text>
-          </Button>
+            <Button
+              style={{ margin: 10 }}
+              primary
+              block
+              onPress={() => this.setState({ visibleCreateTeamModal: true })}
+            >
+              <Text>Create new team</Text>
+            </Button>
+            <Button
+              style={{ margin: 10 }}
+              primary
+              block
+              onPress={() => this.setState({ visibleInviteUserModal: true })}
+            >
+              <Text>Invite user</Text>
+            </Button>
+          </Card>
+
 
           <Modal
             isVisible={this.state.visibleCreateTeamModal}
