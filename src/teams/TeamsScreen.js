@@ -25,7 +25,6 @@ export class TeamsScreen extends Component {
     this.inviteUser = this.inviteUser.bind(this);
   }
 
-
   componentWillMount() {
     let token = null;
     firebase.auth().currentUser.getIdToken(true)
@@ -69,14 +68,13 @@ export class TeamsScreen extends Component {
     if (this.state.userEmail) {
       const idToken = this.state.token;
       const email = this.state.userEmail;
-      console.log(idToken);
       axios.get(`https://standapp-e73d7.firebaseio.com/v3/users.json?auth=${idToken}&orderBy="email"&equalTo="${email}"`) // zalogowany user (auth) pobiera użytkownika z tabeli
       // users poprzez posortowanie (orderBy) i filtrowanie (equalTo)
         .then((user) => {
           console.log(user);
           const id = _.map(user.data, (userData, uid) => uid)[0]; // interesuje nas tylko tabela z uid, więc ją zwracamy i przypiujemy wartosć z indeksu[0] do zmiennej id
           console.log(id);
-          axios.post(`https://standapp-e73d7.firebaseio.com/v3/users/${id}/invitations.json?auth=${idToken}`, new Invitation(firebase.auth().currentUser.uid));
+          axios.post(`https://standapp-e73d7.firebaseio.com/v3/users/${id}/invitations.json?auth=${idToken}`, new Invitation(firebase.auth().currentUser.email));
         })
         .catch(error => console.log(error));
       this.setState({ userEmail: '' });

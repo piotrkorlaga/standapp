@@ -13,10 +13,10 @@ export class Footer extends Component {
     this.onHomeButtonPress = this.onHomeButtonPress.bind(this);
     this.onTeamButtonPress = this.onTeamButtonPress.bind(this);
     this.onUserProfileButtonPress = this.onUserProfileButtonPress.bind(this);
+    this.renderTeamButton = this.renderTeamButton.bind(this);
+    this.renderTeamButtonWithBadge = this.renderTeamButtonWithBadge.bind(this);
+    this.renderTeamButtonWithoutBadge = this.renderTeamButtonWithoutBadge.bind(this);
   }
-
-  // componentWillMount { auth -> event .on nazwa eventu (funkcja)}
-  // event listenera (nasłuchuje czy zostao coś dodane) w FB (nie axios!) na url /users/currentUser.uid/invitations -> jeżeli są nowe, automatycznie wyświetl badge
 
   onHomeButtonPress() {
     Actions.main();
@@ -39,6 +39,42 @@ export class Footer extends Component {
     this.setState({ activeUserProfile: true });
   }
 
+  renderTeamButton() {
+    if (this.props.invitations.length > 0) {
+      this.renderTeamButtonWithBadge();
+    } else {
+      this.renderTeamButtonWithoutBadge();
+    }
+  }
+
+  renderTeamButtonWithBadge() {
+    return (
+      <Button
+        vertical
+        badge
+        onPress={this.onTeamButtonPress}
+        active={this.state.activeTeam}
+      >
+        <Badge><Text>{this.props.invitations.length}</Text></Badge>
+        <Icon name="ios-people" />
+        <Text>Teams</Text>
+      </Button>
+    );
+  }
+
+  renderTeamButtonWithoutBadge() {
+    return (
+      <Button
+        vertical
+        onPress={this.onTeamButtonPress}
+        active={this.state.activeTeam}
+      >
+        <Icon name="ios-people" />
+        <Text>Teams</Text>
+      </Button>
+    );
+  }
+
   render() {
     return (
       <FooterNativeBase>
@@ -51,16 +87,7 @@ export class Footer extends Component {
             <Icon name="ios-home" />
             <Text>Home</Text>
           </Button>
-          <Button
-            badge
-            vertical
-            onPress={this.onTeamButtonPress}
-            active={this.state.activeTeam}
-          >
-            <Badge><Text>1</Text></Badge>
-            <Icon name="ios-people" />
-            <Text>Teams</Text>
-          </Button>
+          {this.renderTeamButton()}
           <Button
             vertical
             onPress={this.onUserProfileButtonPress}

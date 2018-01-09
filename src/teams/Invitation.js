@@ -1,7 +1,8 @@
 export class Invitation {
-  constructor(fromUser) {
+  constructor(fromUser, id?, isRead?, isAccepted?) {
     this.fromUser = fromUser;
-    this.isRead = false;
-    this.isAccepted = false;
+    this.id = id;
+    this.isRead = isRead || false;
+    this.isAccepted = isAccepted || false;
   }
 }
