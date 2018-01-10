@@ -75,7 +75,7 @@ export class TeamsScreen extends Component {
       // users poprzez posortowanie (orderBy) i filtrowanie (equalTo)
         .then((user) => {
           console.log(user);
-          const id = _.map(user.data, (userData, uid) => uid)[0]; // interesuje nas tylko tabela z uid, więc ją zwracamy i przypiujemy wartosć z indeksu[0] do zmiennej id
+          const id = _.map(user.data, (userData, uid) => uid)[0]; // interesuje nas tylko tabela z uid, więc ją zwracamy i przypisujemy wartosć z indeksu[0] do zmiennej id
           console.log(id);
           axios.post(`https://standapp-e73d7.firebaseio.com/v3/users/${id}/invitations.json?auth=${idToken}`, new Invitation(firebase.auth().currentUser.email));
         })

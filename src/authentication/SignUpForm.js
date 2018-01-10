@@ -92,8 +92,8 @@ class SignUpForm extends Component {
 const styles = {
   errorTextStyle: {
     fontSize: 20,
-    alignSelf: 'center',
     color: 'red',
+    padding: 5,
   },
 };
 
