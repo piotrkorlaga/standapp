@@ -15,7 +15,7 @@ export class Invitations extends Component {
 
   componentWillMount() {
     firebase.auth().currentUser.getIdToken(true)
-      .then(idToken => axios.get(`https://standapp-e73d7.firebaseio.com/v3/users/${firebase.auth().currentUser.uid}/invitations.json?auth=${idToken}`)
+      .then(idToken => axios.get(`https://standapp-e73d7.firebaseio.com/v3/users/${firebase.auth().currentUser.uid}/invitations.json?auth=${idToken}`) // orderBy=isAccepted poprawić
         .then((response) => {
           const invitationArray = _.map(response.data, (invitationData, id) => new Invitation(invitationData.fromUser, id, invitationData.isRead, invitationData.isAccepted));
           const unacceptedInvitations = invitationArray.filter(invitation => invitation.isAccepted === false);
@@ -29,7 +29,7 @@ export class Invitations extends Component {
   render() {
     return (
       this.state.unacceptedInvitations.map(invitation => (
-        <Card>
+        <Card key={invitation.id}>
           <CardItem>
             <Left>
               <Text>{`User ${invitation.fromUser} invites you to the team.`}</Text>
@@ -37,9 +37,6 @@ export class Invitations extends Component {
             <Right>
               <Button transparent small success>
                 <Text>Confirm</Text>
-              </Button>
-              <Button transparent small danger>
-                <Text>Delete</Text>
               </Button>
             </Right>
           </CardItem>

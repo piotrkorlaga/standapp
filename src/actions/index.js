@@ -25,7 +25,12 @@ export const passwordChanged = text => ({
 export const signUpUser = ({ email, password }) => (dispatch) => {
   dispatch({ type: SIGNUP_USER_START });
   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) => { signUpUserSuccess(dispatch, user); firebase.auth().signInWithEmailAndPassword(email, password); })
+    .then((user) => {
+
+      // post v3/users/uid/email
+      signUpUserSuccess(dispatch, user);
+      firebase.auth().signInWithEmailAndPassword(email, password);
+    })
     .catch(() => signUpUserFail(dispatch));
 };
 
