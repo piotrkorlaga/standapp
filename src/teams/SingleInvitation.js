@@ -7,18 +7,28 @@ import { Button, Text, Card, CardItem, Right, Left } from 'native-base';
 export class SingleInvitation extends Component {
   constructor() {
     super();
+    this.state = {
+      token: '',
+    };
     this.onConfirmInvitationButtonPress = this.onConfirmInvitationButtonPress.bind(this);
   }
 
   onConfirmInvitationButtonPress() {
+    let token = null;
+    const { currentUser } = firebase.auth();
     firebase.auth().currentUser.getIdToken(true)
-      .then(idToken => axios.patch(`https://standapp-e73d7.firebaseio.com/v3/users/${firebase.auth().currentUser.uid}.json?auth=${idToken}`, { teamkey: 'nomadit' })
-        .then((response) => {
-          axios.patch(`https://standapp-e73d7.firebaseio.com/v3/users/${firebase.auth().currentUser.uid}/invitations/${this.props.invitation.id}.json?auth=${idToken}`, {
-            isAccepted: true,
-          });
-          console.log('Invitations?', response);
-        }))
+      .then((idToken) => {
+        token = idToken;
+        this.setState({ token });
+        return axios.patch(`https://standapp-e73d7.firebaseio.com/v3/users/${currentUser.uid}.json?auth=${idToken}`, { teamkey: 'nomadit' });
+      })
+      .then((response) => {
+        console.log('Invitations?', response);
+        return axios.patch(`https://standapp-e73d7.firebaseio.com/v3/users/${currentUser.uid}/invitations/${this.props.invitation.id}.json?auth=${this.state.token}`, {
+          isAccepted: true,
+        });
+      })
+    // kolejny then żeby dopisać uid usera do tabeli teams/nomadit/users
       .catch(error => console.log('Error with confirm of invitation', error));
   }
 
