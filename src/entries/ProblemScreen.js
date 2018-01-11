@@ -4,8 +4,8 @@ import { DailyEntry } from './DailyEntry';
 import { HeaderSection } from './HeaderSection';
 
 export const ProblemScreen = () => (
-  <Content>
+  <Container>
     <HeaderSection headerSectionTitle="What problems did you meet today?" />
     <DailyEntry placeholder="Problem you met" inputType="problems" />
-  </Content>
+  </Container>
 );
