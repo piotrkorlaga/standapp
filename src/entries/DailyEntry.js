@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import { format } from 'date-fns';
 import { AddInputButton } from './AddInputButton';
 import { DailyEntryList } from './DailyEntryList';
-import { Container, Content, Input, Form } from 'native-base';
+import { Container, Content, Input, Form, Item } from 'native-base';
 
 
 export class DailyEntry extends Component {
@@ -51,21 +51,23 @@ export class DailyEntry extends Component {
 
   render() {
     return (
-      <Content>
-        <Form>
+      <Container>
+        <Item regular>
           <Input
             ref={(component) => { this.inputToClear = component; }}
             onChangeText={text => this.setState({ input: text })}
             placeholder={this.props.placeholder}
+            multiline
           />
-        </Form>
-        {this.state.inputs.map((element, index) =>
+        </Item>
+        <Content>
+          {this.state.inputs.map((element, index) =>
           (<DailyEntryList
             key={index}
             prop={element.input}
             pressDelete={() => this.deleteData(this.props.inputType, element.key)}
-          />))
-         }
+          />))}
+        </Content>
 
         <AddInputButton
           style={styles.buttonSectionStyle}
@@ -73,7 +75,7 @@ export class DailyEntry extends Component {
         >
                     +
         </AddInputButton>
-      </Content>
+      </Container>
     );
   }
 }
