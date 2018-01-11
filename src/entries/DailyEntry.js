@@ -70,28 +70,12 @@ export class DailyEntry extends Component {
         </Content>
 
         <AddInputButton
-          style={styles.buttonSectionStyle}
           onPress={this.saveData}
-        >
-                    +
-        </AddInputButton>
+        />
       </Container>
     );
   }
 }
-
 // element i el to obiekty, które wykorzystujemy w funkcjach.
 // index odpowiada za prop KEY, a element prop za prop, który przechowuje wartości dla key.
 
-const styles = {
-  containerStyle: {
-    marginLeft: 5,
-    marginRight: 5,
-    alignSelf: 'stretch',
-  },
-  buttonSectionStyle: {
-    position: 'relative',
-    alignItems: 'flex-end',
-    alignContent: 'flex-end',
-  },
-};

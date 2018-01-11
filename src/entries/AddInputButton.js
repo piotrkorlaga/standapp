@@ -1,34 +1,19 @@
-import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import React, { Component } from 'react';
+import { Icon, Fab, View } from 'native-base';
 
-export const AddInputButton = ({ onPress, children }) => (
-  <TouchableOpacity
-    style={styles.buttonStyle}
-    onPress={onPress}
-  >
-    <Text style={styles.buttonTextStyle}>{children}</Text>
-  </TouchableOpacity>
-);
+export class AddInputButton extends Component {
+  render() {
+    return (
+      <View>
+        <Fab
+          onPress={this.props.onPress}
+          style={{ backgroundColor: '#34A34F' }}
+          position="bottomRight"
+        >
+          <Icon name="add" />
+        </Fab>
+      </View>
+    );
+  }
+}
 
-const styles = {
-  buttonStyle: {
-    height: 70,
-    width: 70,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    backgroundColor: '#e90a47',
-    borderWidth: 1,
-    borderRadius: 50,
-    borderColor: '#F8F8F8',
-    marginRight: 10,
-    marginBottom: 10,
-    marginTop: 10,
-  },
-  buttonTextStyle: {
-    fontSize: 44,
-    fontWeight: '300',
-    color: '#F8F8F8',
-  },
-};
