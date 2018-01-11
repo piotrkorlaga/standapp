@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container } from 'native-base';
+import { View } from 'native-base';
 import { DailyEntry } from './DailyEntry';
 import { HeaderSection } from './HeaderSection';
 
 
 export const TomorrowScreen = () => (
-  <Container>
+  <View padder style={{ flex: 1 }}>
     <HeaderSection headerSectionTitle="What will you do next day?" />
     <DailyEntry placeholder="Thing to do next day" inputType="tomorrow" />
-  </Container>
+  </View>
 );

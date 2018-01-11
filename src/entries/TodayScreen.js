@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container } from 'native-base';
+import { View } from 'native-base';
 import { DailyEntry } from './DailyEntry';
 import { HeaderSection } from './HeaderSection';
 
 export const TodayScreen = () => (
-  <Container>
+  <View padder style={{ flex: 1 }}>
     <HeaderSection headerSectionTitle="What have you done today?" />
     <DailyEntry placeholder="Thing you get done" inputType="today" />
-  </Container>
+  </View>
 );
 

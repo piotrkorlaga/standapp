@@ -1,10 +1,9 @@
+import { Container, Content, Input, List, Item } from 'native-base';
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { format } from 'date-fns';
 import { AddInputButton } from './AddInputButton';
 import { DailyEntryList } from './DailyEntryList';
-import { Container, Content, Input, List, Item } from 'native-base';
-
 
 export class DailyEntry extends Component {
   constructor(props) {
@@ -53,14 +52,15 @@ export class DailyEntry extends Component {
     return (
       <Container>
         <List>
-        <Item regular>
-          <Input
-            ref={(component) => { this.inputToClear = component; }}
-            onChangeText={text => this.setState({ input: text })}
-            placeholder={this.props.placeholder}
-            multiline
-          />
-        </Item>
+          <Item regular>
+            <Input
+              style={{ paddingTop: 5, paddingBottom: 5 }}
+              ref={(component) => { this.inputToClear = component; }}
+              onChangeText={text => this.setState({ input: text })}
+              placeholder={this.props.placeholder}
+              multiline
+            />
+          </Item>
         </List>
         <Content>
           {this.state.inputs.map((element, index) =>
