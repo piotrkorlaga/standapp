@@ -1,16 +1,16 @@
 import React from 'react';
-import { Button, Icon, Text, ListItem, Body, Right } from 'native-base';
+import { Button, Icon, Text, ListItem, Body, Content } from 'native-base';
 
 export const DailyEntryList = ({ prop, pressDelete }) => (
-  <ListItem>
-    <Body>
-      <Text>{prop}</Text>
-    </Body>
-    <Right>
+  <Content>
+    <ListItem itemDivider last>
       <Button small danger onPress={pressDelete}>
         <Icon name="trash" />
       </Button>
-    </Right>
-  </ListItem>
+      <Body>
+        <Text>{prop}</Text>
+      </Body>
+    </ListItem>
+  </Content>
 );
 

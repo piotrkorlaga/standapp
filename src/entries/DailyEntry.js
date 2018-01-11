@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import { format } from 'date-fns';
 import { AddInputButton } from './AddInputButton';
 import { DailyEntryList } from './DailyEntryList';
-import { Container, Content, Input, Form, Item } from 'native-base';
+import { Container, Content, Input, List, Item } from 'native-base';
 
 
 export class DailyEntry extends Component {
@@ -52,6 +52,7 @@ export class DailyEntry extends Component {
   render() {
     return (
       <Container>
+        <List>
         <Item regular>
           <Input
             ref={(component) => { this.inputToClear = component; }}
@@ -60,6 +61,7 @@ export class DailyEntry extends Component {
             multiline
           />
         </Item>
+        </List>
         <Content>
           {this.state.inputs.map((element, index) =>
           (<DailyEntryList
@@ -68,10 +70,7 @@ export class DailyEntry extends Component {
             pressDelete={() => this.deleteData(this.props.inputType, element.key)}
           />))}
         </Content>
-
-        <AddInputButton
-          onPress={this.saveData}
-        />
+        <AddInputButton onPress={this.saveData} />
       </Container>
     );
   }

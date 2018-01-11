@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content } from 'native-base';
+import { Container } from 'native-base';
 import { DailyEntry } from './DailyEntry';
 import { HeaderSection } from './HeaderSection';
 
