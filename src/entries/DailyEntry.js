@@ -33,7 +33,7 @@ export class DailyEntry extends Component {
           key,
         }],
       });
-      // this.inputToClear.clear();
+      this.inputToClear._root.clear();
       this.setState({ input: '' });
     } else {
       alert('Pass some data.');
