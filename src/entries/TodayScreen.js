@@ -1,11 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Container, Content } from 'native-base';
 import { DailyEntry } from './DailyEntry';
 import { HeaderSection } from './HeaderSection';
 
 export const TodayScreen = () => (
-  <View>
-    <HeaderSection headerSectionTitle="What have you done today?" />
-    <DailyEntry placeholder="Thing you get done" inputType="today" />
-  </View>
+  <Container>
+    <Content>
+      <HeaderSection headerSectionTitle="What have you done today?" />
+      <DailyEntry placeholder="Thing you get done" inputType="today" />
+    </Content>
+  </Container>
 );

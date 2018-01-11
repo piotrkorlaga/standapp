@@ -8,7 +8,7 @@ import {
   Container, Content, Tab, Tabs, Button, Text, Item, Input, Card,
 } from 'native-base';
 import { TeamMember } from './TeamMember';
-import { DailyEntry } from '../history/DailyEntry';
+import { DailyEntry } from '../history/DailyEntry.Model';
 import { User } from '../history/User.Model';
 import { Invitation } from './Invitation.Model';
 import { Invitations } from './Invitations';

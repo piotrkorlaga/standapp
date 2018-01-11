@@ -17,7 +17,7 @@ const styles = {
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
+    position: 'absolute',
     backgroundColor: '#e90a47',
     borderWidth: 1,
     borderRadius: 50,

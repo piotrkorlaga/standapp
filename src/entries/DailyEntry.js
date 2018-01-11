@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { format } from 'date-fns';
-import { View, TextInput } from 'react-native';
 import { AddInputButton } from './AddInputButton';
 import { DailyEntryList } from './DailyEntryList';
+import { Container, Content, Input, Form } from 'native-base';
 
 
 export class DailyEntry extends Component {
@@ -33,7 +33,7 @@ export class DailyEntry extends Component {
           key,
         }],
       });
-      this.inputToClear.clear();
+      // this.inputToClear.clear();
       this.setState({ input: '' });
     } else {
       alert('Pass some data.');
@@ -49,19 +49,16 @@ export class DailyEntry extends Component {
     this.setState({ inputs: result });
   }
 
-
   render() {
     return (
-      <View style={styles.containerStyle}>
-
-        <TextInput
-          ref={(component) => { this.inputToClear = component; }}
-          style={styles.textInputStyle}
-          onChangeText={text => this.setState({ input: text })}
-          multiline
-          placeholder={this.props.placeholder}
-        />
-
+      <Content>
+        <Form>
+          <Input
+            ref={(component) => { this.inputToClear = component; }}
+            onChangeText={text => this.setState({ input: text })}
+            placeholder={this.props.placeholder}
+          />
+        </Form>
         {this.state.inputs.map((element, index) =>
           (<DailyEntryList
             key={index}
@@ -76,8 +73,7 @@ export class DailyEntry extends Component {
         >
                     +
         </AddInputButton>
-
-      </View>
+      </Content>
     );
   }
 }
@@ -91,17 +87,9 @@ const styles = {
     marginRight: 5,
     alignSelf: 'stretch',
   },
-
-  textInputStyle: {
-    fontSize: 16,
-    alignSelf: 'stretch',
-    flexGrow: 30,
-  },
-
   buttonSectionStyle: {
     position: 'relative',
     alignItems: 'flex-end',
     alignContent: 'flex-end',
-
   },
 };
