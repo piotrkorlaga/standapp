@@ -14,7 +14,7 @@ class RouterComponent extends Component {
   // sceneStyle will be applied to all different scenes of our App
   render() {
     return (
-      <Router>
+      <Router titleStyle={{ alignSelf: 'center'}}>
         <Stack key="root" hideNavBar>
           <Scene key="loader" component={Spinner} />
           <Scene key="auth">
