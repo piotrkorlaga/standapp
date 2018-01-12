@@ -20,8 +20,8 @@ export class UserProfileScreen extends Component {
       <Container>
         <Content>
           <Button
-            style={{ marginTop: 10, marginLeft: 10 }}
-            primary
+            style={{ marginTop: 10 }}
+            block
             onPress={() => this.onLogout()}
           >
             <Text>Logout</Text>
