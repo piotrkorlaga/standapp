@@ -14,7 +14,7 @@ class RouterComponent extends Component {
   // sceneStyle will be applied to all different scenes of our App
   render() {
     return (
-      <Router titleStyle={{ alignSelf: 'center'}}>
+      <Router titleStyle={{ alignSelf: 'center' }}>
         <Stack key="root" hideNavBar>
           <Scene key="loader" component={Spinner} />
           <Scene key="auth">
@@ -29,15 +29,17 @@ class RouterComponent extends Component {
               title="Sign up for free"
             />
           </Scene>
-          <Scene key="main">
-            <Scene
-              key="home"
-              component={HistoryScreen}
-              title="User's history"
-              onRight={() => Actions.entries()}
-              rightTitle="Add"
-              initial
-            />
+          <Scene key="main" hideNavBar>
+            <Scene key="usershistorycard">
+              <Scene
+                key="home"
+                component={HistoryScreen}
+                title="User's history"
+                onRight={() => Actions.entries()}
+                rightTitle="Add"
+                initial
+              />
+            </Scene>
             <Scene key="entries">
               <Scene
                 key="today"
