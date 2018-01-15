@@ -4,6 +4,12 @@ import { List, Content, Header, Body, Title } from 'native-base';
 import React, { Component } from 'react';
 import HistoryCard from './HistoryCard';
 
+const styles = {
+  headerStyle: {
+    backgroundColor: 'green',
+  },
+};
+
 export class UserHistoryCard extends Component {
   constructor() {
     super();
@@ -28,7 +34,9 @@ export class UserHistoryCard extends Component {
   render() {
     return (
       <Content>
-        <Header style={{ backgroundColor: 'green' }}>
+        <Header
+          style={styles.headerStyle}
+        >
           <Body>
             <Title>{`Daily stand up of: ${this.state.userName}`}</Title>
           </Body>

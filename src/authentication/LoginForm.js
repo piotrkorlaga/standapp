@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
+import { Container, Content, Form, Item, Input, Label, Button, Text, View } from 'native-base';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { emailChanged, passwordChanged, loginUser } from '../actions/index';
@@ -10,8 +10,17 @@ const styles = {
     alignSelf: 'center',
     color: 'red',
   },
-  signUpContentStyle: {
-    paddingTop: 100,
+  orSignUpStyle: {
+    paddingTop: 45,
+    alignSelf: 'center',
+    flexDirection: 'row',
+  },
+  unlinkedTextStyle: {
+    fontSize: 18,
+  },
+  linkedTextStyle: {
+    color: 'blue',
+    fontSize: 18,
   },
 };
 
@@ -91,15 +100,17 @@ class LoginForm extends Component {
             </Content>
           </Form>
 
-          <Content style={styles.signUpContentStyle}>
-            <Text style={{ alignSelf: 'center', paddingBottom: 10 }}>Or</Text>
-            <Button
+
+          <View style={styles.orSignUpStyle}>
+            <Text style={styles.unlinkedTextStyle}>or </Text>
+            <Text
+              style={styles.linkedTextStyle}
               onPress={this.onSignUpButtonPress}
-              block
             >
-              <Text>Sign up</Text>
-            </Button>
-          </Content>
+              sign up
+            </Text>
+          </View>
+
         </Content>
       </Container>
     );

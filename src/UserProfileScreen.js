@@ -2,6 +2,12 @@ import firebase from 'firebase';
 import React, { Component } from 'react';
 import { Container, Content, Text, Button } from 'native-base';
 
+const styles = {
+  buttonStyle: {
+    marginTop: 10,
+  },
+};
+
 export class UserProfileScreen extends Component {
   constructor() {
     super();
@@ -20,8 +26,8 @@ export class UserProfileScreen extends Component {
       <Container>
         <Content>
           <Button
-            style={{ marginTop: 10, marginLeft: 10 }}
-            primary
+            style={styles.buttonStyle}
+            block
             onPress={() => this.onLogout()}
           >
             <Text>Logout</Text>

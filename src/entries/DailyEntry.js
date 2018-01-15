@@ -1,10 +1,9 @@
+import { Container, Content, Input, Item } from 'native-base';
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { format } from 'date-fns';
-import { View, TextInput } from 'react-native';
 import { AddInputButton } from './AddInputButton';
 import { DailyEntryList } from './DailyEntryList';
-
 
 export class DailyEntry extends Component {
   constructor(props) {
@@ -33,7 +32,7 @@ export class DailyEntry extends Component {
           key,
         }],
       });
-      this.inputToClear.clear();
+      this.inputToClear._root.clear();
       this.setState({ input: '' });
     } else {
       alert('Pass some data.');
@@ -49,59 +48,33 @@ export class DailyEntry extends Component {
     this.setState({ inputs: result });
   }
 
-
   render() {
     return (
-      <View style={styles.containerStyle}>
-
-        <TextInput
-          ref={(component) => { this.inputToClear = component; }}
-          style={styles.textInputStyle}
-          onChangeText={text => this.setState({ input: text })}
-          multiline
-          placeholder={this.props.placeholder}
-        />
-
-        {this.state.inputs.map((element, index) =>
+      <Container>
+        <Item regular>
+          <Input
+            ref={(component) => { this.inputToClear = component; }}
+            onChangeText={text => this.setState({ input: text })}
+            placeholder={this.props.placeholder}
+            multiline
+            numberOfLines={3}
+            textAlignVertical="top"
+            autoCorrect={false}
+          />
+        </Item>
+        <Content>
+          {this.state.inputs.map((element, index) =>
           (<DailyEntryList
             key={index}
             prop={element.input}
             pressDelete={() => this.deleteData(this.props.inputType, element.key)}
-          />))
-         }
-
-        <AddInputButton
-          style={styles.buttonSectionStyle}
-          onPress={this.saveData}
-        >
-                    +
-        </AddInputButton>
-
-      </View>
+          />))}
+        </Content>
+        <AddInputButton onPress={this.saveData} />
+      </Container>
     );
   }
 }
-
 // element i el to obiekty, które wykorzystujemy w funkcjach.
 // index odpowiada za prop KEY, a element prop za prop, który przechowuje wartości dla key.
 
-const styles = {
-  containerStyle: {
-    marginLeft: 5,
-    marginRight: 5,
-    alignSelf: 'stretch',
-  },
-
-  textInputStyle: {
-    fontSize: 16,
-    alignSelf: 'stretch',
-    flexGrow: 30,
-  },
-
-  buttonSectionStyle: {
-    position: 'relative',
-    alignItems: 'flex-end',
-    alignContent: 'flex-end',
-
-  },
-};
