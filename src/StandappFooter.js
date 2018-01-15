@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Footer as FooterNativeBase, FooterTab, Button, Text, Icon, Badge } from 'native-base';
+import { Footer, FooterTab, Button, Text, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
-export class Footer extends Component {
+export class StandappFooter extends Component {
   constructor() {
     super();
     this.state = {
@@ -77,7 +77,7 @@ export class Footer extends Component {
 
   render() {
     return (
-      <FooterNativeBase>
+      <Footer>
         <FooterTab>
           <Button
             vertical
@@ -98,7 +98,7 @@ export class Footer extends Component {
             <Text>User profile</Text>
           </Button>
         </FooterTab>
-      </FooterNativeBase>
+      </Footer>
     );
   }
 }

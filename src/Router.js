@@ -10,11 +10,17 @@ import { Spinner } from './core/Spinner';
 import { TeamsScreen } from './teams/TeamsScreen';
 import { UserProfileScreen } from './UserProfileScreen';
 
+const styles = {
+  navBarTitlePosition: {
+    alignSelf: 'center',
+  },
+};
+
 class RouterComponent extends Component {
   // sceneStyle will be applied to all different scenes of our App
   render() {
     return (
-      <Router titleStyle={{ alignSelf: 'center' }}>
+      <Router titleStyle={styles.navBarTitlePosition}>
         <Stack key="root" hideNavBar>
           <Scene key="loader" component={Spinner} />
           <Scene key="auth">

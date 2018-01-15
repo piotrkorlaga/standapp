@@ -1,10 +1,20 @@
 import React from 'react';
 import { Header, Body, Text } from 'native-base';
 
+const styles = {
+  headerStyle: {
+    marginBottom: 10,
+  },
+  headerTextStyle: {
+    color: '#ffffff',
+    alignSelf: 'center',
+  },
+};
+
 export const HeaderSection = props => (
-  <Header style={{ marginBottom: 10 }}>
+  <Header style={styles.headerStyle}>
     <Body>
-      <Text style={{ color: '#ffffff', alignSelf: 'center' }}>{props.headerSectionTitle}</Text>
+      <Text style={styles.headerTextStyle}>{props.headerSectionTitle}</Text>
     </Body>
   </Header>
 );

@@ -15,6 +15,13 @@ const styles = {
     alignSelf: 'center',
     flexDirection: 'row',
   },
+  unlinkedTextStyle: {
+    fontSize: 18,
+  },
+  linkedTextStyle: {
+    color: 'blue',
+    fontSize: 18,
+  },
 };
 
 class LoginForm extends Component {
@@ -94,15 +101,15 @@ class LoginForm extends Component {
           </Form>
 
 
-            <View style={styles.orSignUpStyle}>
-              <Text style={{ fontSize: 18 }}>or </Text>
-              <Text
-                style={{ color: 'blue', fontSize: 18 }}
-                onPress={this.onSignUpButtonPress}
-              >
+          <View style={styles.orSignUpStyle}>
+            <Text style={styles.unlinkedTextStyle}>or </Text>
+            <Text
+              style={styles.linkedTextStyle}
+              onPress={this.onSignUpButtonPress}
+            >
               sign up
-              </Text>
-            </View>
+            </Text>
+          </View>
 
         </Content>
       </Container>

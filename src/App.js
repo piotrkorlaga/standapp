@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { LOGIN_USER_SUCCESS } from './actions/actions';
 import Store from './StoreConfig';
 import RouterComponent from './Router';
-import { Footer } from './Footer';
+import { StandappFooter } from './StandappFooter';
 import { Invitation } from './teams/Invitation.Model';
 
 export default class App extends Component {
@@ -51,7 +51,7 @@ export default class App extends Component {
       <Provider store={Store}>
         <Container>
           <RouterComponent />
-          <Footer unreadInvitations={this.state.unreadInvitations} />
+          <StandappFooter unreadInvitations={this.state.unreadInvitations} />
         </Container>
       </Provider>
     );
