@@ -1,6 +1,6 @@
 import firebase from 'firebase';
+import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -25,8 +25,21 @@ export const passwordChanged = text => ({
 export const signUpUser = ({ email, password }) => (dispatch) => {
   dispatch({ type: SIGNUP_USER_START });
   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) => { signUpUserSuccess(dispatch, user); firebase.auth().signInWithEmailAndPassword(email, password); })
-    .catch(() => signUpUserFail(dispatch));
+    .then((user) => {
+      signUpUserSuccess(dispatch, user); firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((response) => {
+          console.log('responseAfterSignUp: ', response);
+          firebase.auth().currentUser.getIdToken(true)
+            .then((idToken) => {
+              const userData = {
+                key: user.uid,
+                email: user.email,
+              };
+              axios.post(`https://standapp-e73d7.firebaseio.com/v3/users.json?auth=${idToken}`, userData);
+            });
+        });
+    })
+    .catch((error) => { console.log(error); signUpUserFail(dispatch); });
 };
 
 const signUpUserSuccess = (dispatch, user) => {

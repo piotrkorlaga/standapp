@@ -1,4 +1,4 @@
-import { Content, Button, Text } from 'native-base';
+import { Content } from 'native-base';
 import React from 'react';
 import { DailyEntry } from './DailyEntry';
 import { HeaderSection } from './HeaderSection';

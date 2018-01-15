@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Footer as FooterNativeBase, FooterTab, Button, Text, Icon } from 'native-base';
+import { Footer as FooterNativeBase, FooterTab, Button, Text, Icon, Badge } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
 export class Footer extends Component {
@@ -13,6 +13,9 @@ export class Footer extends Component {
     this.onHomeButtonPress = this.onHomeButtonPress.bind(this);
     this.onTeamButtonPress = this.onTeamButtonPress.bind(this);
     this.onUserProfileButtonPress = this.onUserProfileButtonPress.bind(this);
+    this.renderTeamButton = this.renderTeamButton.bind(this);
+    this.renderTeamButtonWithBadge = this.renderTeamButtonWithBadge.bind(this);
+    this.renderTeamButtonWithoutBadge = this.renderTeamButtonWithoutBadge.bind(this);
   }
 
   onHomeButtonPress() {
@@ -36,25 +39,58 @@ export class Footer extends Component {
     this.setState({ activeUserProfile: true });
   }
 
+  renderTeamButton() {
+    if (this.props.unreadInvitations.length > 0) {
+      this.renderTeamButtonWithBadge();
+    } else {
+      this.renderTeamButtonWithoutBadge();
+    }
+  }
+
+  renderTeamButtonWithBadge() {
+    return (
+      <Button
+        vertical
+        badge
+        onPress={this.onTeamButtonPress}
+        active={this.state.activeTeam}
+      >
+        <Badge><Text>{this.props.unreadInvitations.length}</Text></Badge>
+        <Icon name="ios-people" />
+        <Text>Teams</Text>
+      </Button>
+    );
+  }
+
+  renderTeamButtonWithoutBadge() {
+    return (
+      <Button
+        vertical
+        onPress={this.onTeamButtonPress}
+        active={this.state.activeTeam}
+      >
+        <Icon name="ios-people" />
+        <Text>Teams</Text>
+      </Button>
+    );
+  }
+
   render() {
     return (
       <FooterNativeBase>
         <FooterTab>
           <Button
+            vertical
             onPress={this.onHomeButtonPress}
             active={this.state.activeHome}
           >
             <Icon name="ios-home" />
             <Text>Home</Text>
           </Button>
+          {this.renderTeamButtonWithBadge()}
+          {console.log('this.props.unreadInvitations: ', this.props.unreadInvitations)}
           <Button
-            onPress={this.onTeamButtonPress}
-            active={this.state.activeTeam}
-          >
-            <Icon name="ios-people" />
-            <Text>Teams</Text>
-          </Button>
-          <Button
+            vertical
             onPress={this.onUserProfileButtonPress}
             active={this.state.activeUserProfile}
           >

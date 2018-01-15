@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { UserHistoryCard } from './UserHistoryCard';
 import { DailyEntry } from './DailyEntry';
-import { User } from './User';
+import { User } from './User.Model';
 
 // ściąga wpisy całego teamu i grupuje po userze
 export class HistoryScreen extends Component {
