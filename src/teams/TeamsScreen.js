@@ -18,8 +18,8 @@ export class TeamsScreen extends Component {
     super(props);
     this.state = {
       teamMembers: [],
-      visibleCreateTeamModal: false,
-      visibleInviteUserModal: false,
+      isCreateTeamModalVisible: false,
+      isInviteUserModalVisible: false,
       token: '',
       teamName: '',
       userEmail: '',
@@ -61,9 +61,9 @@ export class TeamsScreen extends Component {
       firebase.database().ref('v3/teams/')
         .push({ name });
       this.setState({ teamName: '' });
-      this.setState({ visibleCreateTeamModal: false });
+      this.setState({ isCreateTeamModalVisible: false });
     } else {
-      this.setState({ visibleCreateTeamModal: false });
+      this.setState({ isCreateTeamModalVisible: false });
     }
   }
 
@@ -77,13 +77,14 @@ export class TeamsScreen extends Component {
           console.log(user);
           const id = _.map(user.data, (userData, uid) => uid)[0]; // interesuje nas tylko tabela z uid, więc ją zwracamy i przypisujemy wartosć z indeksu[0] do zmiennej id
           console.log(id);
-          axios.post(`https://standapp-e73d7.firebaseio.com/v3/users/${id}/invitations.json?auth=${idToken}`, new Invitation(firebase.auth().currentUser.email));
+          axios.post(`https://standapp-e73d7.firebaseio.com/v3/users/${id}/invitations.json?auth=${idToken}`, new Invitation(firebase.auth().currentUser.email))
+            .catch(error => console.log(error));
         })
         .catch(error => console.log(error));
       this.setState({ userEmail: '' });
-      this.setState({ visibleInviteUserModal: false });
+      this.setState({ isInviteUserModalVisible: false });
     } else {
-      this.setState({ visibleInviteUserModal: false });
+      this.setState({ isInviteUserModalVisible: false });
     }
   }
 
@@ -105,7 +106,7 @@ export class TeamsScreen extends Component {
               style={{ margin: 10 }}
               primary
               block
-              onPress={() => this.setState({ visibleCreateTeamModal: true })}
+              onPress={() => this.setState({ isCreateTeamModalVisible: true })}
             >
               <Text>Create new team</Text>
             </Button>
@@ -113,14 +114,14 @@ export class TeamsScreen extends Component {
               style={{ margin: 10 }}
               primary
               block
-              onPress={() => this.setState({ visibleInviteUserModal: true })}
+              onPress={() => this.setState({ isInviteUserModalVisible: true })}
             >
               <Text>Invite user</Text>
             </Button>
           </Card>
 
           <Modal
-            isVisible={this.state.visibleCreateTeamModal}
+            isVisible={this.state.isCreateTeamModalVisible}
           >
             <View style={styles.modalContent}>
               <Text style={styles.modalPartsPosition}>Please enter the team name</Text>
@@ -143,7 +144,7 @@ export class TeamsScreen extends Component {
           </Modal>
 
           <Modal
-            isVisible={this.state.visibleInviteUserModal}
+            isVisible={this.state.isInviteUserModalVisible}
           >
             <View style={styles.modalContent}>
               <Text style={styles.modalPartsPosition}>Please enter user's email</Text>

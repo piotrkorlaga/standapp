@@ -40,7 +40,7 @@ export class Footer extends Component {
   }
 
   renderTeamButton() {
-    if (this.props.invitations.length > 0) {
+    if (this.props.unreadInvitations.length > 0) {
       this.renderTeamButtonWithBadge();
     } else {
       this.renderTeamButtonWithoutBadge();
@@ -55,7 +55,7 @@ export class Footer extends Component {
         onPress={this.onTeamButtonPress}
         active={this.state.activeTeam}
       >
-        <Badge><Text>{this.props.invitations.length}</Text></Badge>
+        <Badge><Text>{this.props.unreadInvitations.length}</Text></Badge>
         <Icon name="ios-people" />
         <Text>Teams</Text>
       </Button>
@@ -88,7 +88,7 @@ export class Footer extends Component {
             <Text>Home</Text>
           </Button>
           {this.renderTeamButtonWithBadge()}
-          {console.log('this.props.invitations: ', this.props.invitations)}
+          {console.log('this.props.unreadInvitations: ', this.props.unreadInvitations)}
           <Button
             vertical
             onPress={this.onUserProfileButtonPress}

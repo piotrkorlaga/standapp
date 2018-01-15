@@ -34,13 +34,11 @@ export default class App extends Component {
         // listener nasłuchuje, czy dane w v3/.../unreadInvitations zostały zmienione. Jeśli tak, przekazuje je do obiektu invitation
         invitationRef.on('value', (snapshot) => {
           // ponowne użycie klasy Invitation i opcjonalnych pól w konstruktorze, aby wyciągnąć dane na
-          const invitationArray = _.map(snapshot.val(), (invitationData, id) => new Invitation(invitationData.fromUser, id, invitationData.isRead, invitationData.isAccepted));
-          const unreadInvitations = invitationArray.filter(invitation => invitation.isRead === false);
+          const invitations = _.map(snapshot.val(), (invitationData, id) => new Invitation(invitationData.fromUser, id, invitationData.isRead, invitationData.isAccepted));
+          const unreadInvitations = invitations.filter(invitation => invitation.isRead === false);
           if (unreadInvitations.length > 0) {
             this.setState({ unreadInvitations });
           }
-          console.log(snapshot.val());
-          console.log('unreadInvitations.length:', this.state.unreadInvitations.length);
         });
         Actions.main();
       } else {
@@ -53,7 +51,7 @@ export default class App extends Component {
       <Provider store={Store}>
         <Container>
           <RouterComponent />
-          <Footer invitations={this.state.unreadInvitations} />
+          <Footer unreadInvitations={this.state.unreadInvitations} />
         </Container>
       </Provider>
     );
