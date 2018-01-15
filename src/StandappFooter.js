@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Footer, FooterTab, Button, Text, Icon } from 'native-base';
+import { Footer, FooterTab, Button, Text, Icon, Badge } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
 export class StandappFooter extends Component {
